@@ -1,6 +1,7 @@
 import CategoryModel from "./model";
 import CategoryService from "./service";
 import {Request, Response, NextFunction} from "express";
+import IErrorResponse from '../../common/IErrorResponse.interface';
 
 class CategoryController {
     private categoryService: CategoryService;
@@ -24,15 +25,18 @@ class CategoryController {
             return;
         }
 
-        const category: CategoryModel|null = await this.categoryService.getById(categoryId);
+        const data: CategoryModel|null|IErrorResponse = await this.categoryService.getById(categoryId);
 
-        if (category === null){
+        if (data === null){
             res.sendStatus(404);
             return;
         }
-        res.send(category);
+        if (data instanceof CategoryModel){
+            res.send(data);
+            return;
+        }
+        res.status(500).send(data);
     }
-
 }
 
 

@@ -1,5 +1,6 @@
 import CategoryModel from "./model";
 import * as mysql2 from 'mysql2/promise';
+import IErrorResponse from '../../common/IErrorResponse.interface';
 
 class CategoryService {
     private db: mysql2.Connection;
@@ -17,41 +18,70 @@ class CategoryService {
         return item;
     }
 
-    public async getAll(): Promise<CategoryModel[]> {
-        const lista: CategoryModel[] = [];
+    public async getAll(): Promise<CategoryModel[]|IErrorResponse> {
+        return new Promise<CategoryModel[]|IErrorResponse>(async (resolve) =>{
+
 
         const sql: string = "SELECT * FROM category;";
-        const [ rows, columns ] = await this.db.execute(sql);
+        this.db.execute(sql)
+        .then(async result => {
+            const rows = result[0];
+            const lista: CategoryModel[] = [];
 
-        if (Array.isArray(rows)) {
-            for (const row of rows) {
-                lista.push(
-                    await this.adaptModel(
-                        row
+            if (Array.isArray(rows)) {
+                for (const row of rows) {
+                    lista.push(
+                        await this.adaptModel(
+                            row
+                        )
                     )
-                )
+                }
             }
-        }
-
-        return lista;
-
-    }
-
-    public async getById(categoryId: number): Promise<CategoryModel|null>{
-        const sql: string = "SELECT * FROM category WHERE category_id = ?;";
-        const [ rows, columns ] = await this.db.execute(sql, [categoryId]);
+    
+            resolve (lista);
+        })
+        .catch(error => {
+            resolve({
+                errorCode: error?.errno,
+                errorMessage: error?.sqlMessage
+            })
+        });
         
-        if (!Array.isArray(rows)) {
-            return null;
-        }
+    });
 
-        if (rows.length === 0) {
-            return null;
-        }
+}
 
-        return await this.adaptModel(
-            rows[0]
-        )
+    public async getById(categoryId: number): Promise<CategoryModel|null|IErrorResponse>{
+        return new Promise<CategoryModel|null|IErrorResponse>(async resolve => {
+        const sql: string = "SELECT * FROM category WHERE category_id = ?;";
+        this.db.execute(sql, [categoryId])
+        .then(async result => {
+            const [ rows, columns] = result;
+
+            if (!Array.isArray(rows)) {
+                resolve(null);
+                return;
+            }
+    
+            if (rows.length === 0) {
+                resolve(null);
+                return;
+            }
+    
+            resolve (await this.adaptModel(
+                rows[0]
+            ));
+
+        })
+        .catch(error => {
+            resolve({
+                errorCode: error?.errno,
+                errorMessage: error?.sqlMessage
+            });
+        });
+
+        });
+
     }
 }
 
