@@ -1,6 +1,7 @@
 import CategoryModel from "./model";
 import * as mysql2 from 'mysql2/promise';
 import IErrorResponse from '../../common/IErrorResponse.interface';
+import { IAddCAtegory } from "./dto/AddCategory";
 
 class CategoryService {
     private db: mysql2.Connection;
@@ -81,7 +82,29 @@ class CategoryService {
         });
 
         });
-
+    }
+    public async add(data: IAddCAtegory): Promise<CategoryModel|IErrorResponse> {
+        return new Promise<CategoryModel|IErrorResponse>(async resolve => {
+            const sql = `
+                    INSERT
+                        category
+                    SET
+                        name = ?;
+                        `;
+            this.db.execute(sql, [data.name])
+            .then(async result => {
+                const insertInfo: any = result[0];
+                
+                const newCategoryId: number = +(insertInfo?.insertId);
+                resolve(await this.getById(newCategoryId));
+            })
+            .catch(error => {
+                resolve({
+                    errorCode: error?.errno,
+                    errorMessage: error?.sqlMessage
+                });
+            });
+        });
     }
 }
 
