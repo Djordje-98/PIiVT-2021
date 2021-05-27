@@ -1,7 +1,8 @@
 import CategoryModel from "./model";
 import IErrorResponse from '../../common/IErrorResponse.interface';
-import { IAddCAtegory } from "./dto/AddCategory";
+import { IAddCategory } from "./dto/AddCategory";
 import BaseService from '../../services/BaseService';
+import { IEditCategory } from "./dto/EditCategory";
 
 class CategoryService extends BaseService<CategoryModel> {
 
@@ -22,7 +23,7 @@ class CategoryService extends BaseService<CategoryModel> {
     public async getById(categoryId: number): Promise<CategoryModel|null|IErrorResponse>{
         return await this.getByIdFromTable("category", categoryId);
     }
-    public async add(data: IAddCAtegory): Promise<CategoryModel|IErrorResponse> {
+    public async add(data: IAddCategory): Promise<CategoryModel|IErrorResponse> {
         return new Promise<CategoryModel|IErrorResponse>(async resolve => {
             const sql = `
                     INSERT
@@ -44,6 +45,38 @@ class CategoryService extends BaseService<CategoryModel> {
                 });
             });
         });
+    }
+    public async edit(categoryId: number, data: IEditCategory): Promise<CategoryModel|IErrorResponse|null> {
+       const result = await this.getById(categoryId);
+
+       if (result === null) {
+           return null;
+       }
+
+       if (!(result instanceof CategoryModel)) {
+           return result
+        
+       }
+       return new Promise<CategoryModel|IErrorResponse>(async resolve => {
+        const sql = `
+                UPDATE
+                    category
+                SET
+                    name = ?
+                WHERE
+                    category_id = ?;
+                    `;
+        this.db.execute(sql, [data.name, categoryId ])
+        .then(async result => {
+            resolve(await this.getById(categoryId));
+        })
+        .catch(error => {
+            resolve({
+                errorCode: error?.errno,
+                errorMessage: error?.sqlMessage
+            });
+        });
+    });
     }
 }
 
