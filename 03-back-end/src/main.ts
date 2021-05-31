@@ -5,6 +5,7 @@ import CategoryRouter from './components/category/router';
 import * as mysql2 from "mysql2/promise";
 import IApplicationResources from './common/IApplicationResources.interface';
 import Router from './router';
+import FeatureRouter from './components/feature/router';
 
 async function main() {
   const application: express.Application = express();
@@ -41,6 +42,7 @@ application.use(
 
 Router.setupRoutes(application, resources, [
       new CategoryRouter(),
+      new FeatureRouter(),
 ]);
 
 application.use((req, res,) => {
