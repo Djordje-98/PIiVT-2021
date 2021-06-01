@@ -8,6 +8,8 @@ import Router from './router';
 import FeatureRouter from './components/feature/router';
 import CategoryService from './components/category/service';
 import FeatureService from './components/feature/service';
+import LaptopService from './components/laptop/service';
+import LaptopRouter from './components/laptop/router';
 
 async function main() {
   const application: express.Application = express();
@@ -34,6 +36,7 @@ resources.databaseConnection.connect();
 resources.services = {
   categoryService: new CategoryService(resources),
   featureService: new FeatureService(resources),
+  laptopService: new LaptopService(resources),
 },
 
 application.use(
@@ -50,6 +53,7 @@ application.use(
 Router.setupRoutes(application, resources, [
       new CategoryRouter(),
       new FeatureRouter(),
+      new LaptopRouter(),
 ]);
 
 application.use((req, res,) => {
