@@ -1,16 +1,28 @@
 import CategoryModel from "./model";
 import IErrorResponse from '../../common/IErrorResponse.interface';
 import { IAddCategory } from "./dto/AddCategory";
-import BaseService from '../../services/BaseService';
+import BaseService from '../../common/BaseService';
 import { IEditCategory } from "./dto/EditCategory";
+import IModelAdapterOptions from '../../common/IModelAdapterOptions.interface';
+
+class CategoryModelAdapterOptions implements IModelAdapterOptions {
+    loadFeatures: boolean = false;
+}
 
 class CategoryService extends BaseService<CategoryModel> {
 
-    protected async adaptModel(row: any): Promise<CategoryModel> {
+    protected async adaptModel(
+        row: any,
+        options: Partial<CategoryModelAdapterOptions> = { }
+        ): Promise<CategoryModel> {
         const item: CategoryModel = new CategoryModel();
 
         item.categoryId = +(row?.category_id);
         item.name = row?.name;
+
+        if (options.loadFeatures) {
+           item.features = await this.services.featureService.getAllByCategoryId(item.categoryId);
+        }
 
         return item;
     }
@@ -20,8 +32,11 @@ class CategoryService extends BaseService<CategoryModel> {
 
     }
 
-    public async getById(categoryId: number): Promise<CategoryModel|null|IErrorResponse>{
-        return await this.getByIdFromTable("category", categoryId);
+    public async getById(
+        categoryId: number,
+        options: Partial<CategoryModelAdapterOptions> = { }
+        ): Promise<CategoryModel|null|IErrorResponse>{
+        return await this.getByIdFromTable("category", categoryId, options);
     }
     public async add(data: IAddCategory): Promise<CategoryModel|IErrorResponse> {
         return new Promise<CategoryModel|IErrorResponse>(async resolve => {
