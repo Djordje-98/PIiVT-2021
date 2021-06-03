@@ -5,7 +5,7 @@ interface IAddLaptop{
     title: string;
     description: string;
     price: number;
-    categoryId: number;
+    categoryId?: number;
     features: LaptopFeatureValue[];
 }
 
@@ -20,13 +20,13 @@ const ajv = new Ajv();
       properties: {
         title: {
               type: "string",
-             // minLength: 2,
-             // maxLength: 128,
+              minLength: 2,
+              maxLength: 128,
           },
           description: {
             type: "string",
-           // minLength: 2,
-           // maxLength: 64 * 1024,
+            minLength: 2,
+            maxLength: 64 * 1024,
         },
         price: {
             type: "number",
@@ -50,8 +50,8 @@ const ajv = new Ajv();
                     },
                     value: {
                         type: "string",
-                        //minLenght: 2,
-                       // maxLenght: 64,
+                        minLength: 2,
+                        maxLength: 64,
 
                     }
                 },
@@ -69,7 +69,6 @@ const ajv = new Ajv();
         "title",
         "description",
         "price",
-        "categoryId",
         "features",
 
       ],

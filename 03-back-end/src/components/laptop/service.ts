@@ -6,7 +6,7 @@ import IErrorResponse from '../../common/IErrorResponse.interface';
 import { IAddLaptop, IUploadedPhoto } from './dto/IAddLaptop';
 
 export class LaptopModelAdapterOptions implements IModelAdapterOptionsInterface {
-    loadCategory: boolean = false;
+    loadCategories: boolean = false;
     loadFeatures: boolean = false;
     loadPhotos: boolean = false;
 }
@@ -23,10 +23,9 @@ class LaptopService extends BaseService<LaptopModel> {
             item.description = data?.description;
             item.createdAt = new Date(data?.created_at);
             item.price = +(data?.price);
-            item.categoryId = +(data?.category_id);
 
-            if (options.loadCategory) {
-                item.category = await this.services.categoryService.getById(item.categoryId) as CategoryModel;
+            if (options.loadCategories) {
+                item.categories = await this.getAllCategoriesByLaptopId(item.laptopid);
             }
 
             if (options.loadFeatures) {
@@ -38,6 +37,36 @@ class LaptopService extends BaseService<LaptopModel> {
             }
 
             return item;
+    }
+
+    private async getAllCategoriesByLaptopId(laptopId: number): Promise<CategoryModel[]> {
+        const sql = `
+            SELECT
+                laptop_category.category_id,
+                category.name
+            FROM
+                laptop_category
+            INNER JOIN category ON category.category_id = laptop_category.category_id
+            WHERE
+                laptop_category.laptop_id = ?;`;
+
+        const [ rows ] = await this.db.execute(sql, [ laptopId ]);
+
+        if (!Array.isArray(rows) || rows.length === 0) {
+            return [];
+        }
+
+        const items: CategoryModel[] = [];
+
+
+        for (const row of rows as any) {
+            items.push({
+                categoryId: +(row?.category_id),
+                name: row?.name,
+            });
+        }
+
+        return items;
     }
 
     private async getAllFeatureValuesByLaptopId(laptopId: number): Promise<LaptopFeatureValue[]> {
@@ -103,6 +132,7 @@ class LaptopService extends BaseService<LaptopModel> {
         uploadedPhotos: IUploadedPhoto[],
     ): Promise<LaptopModel|IErrorResponse> {
         return new Promise<LaptopModel|IErrorResponse>(resolve => {
+            console.log(data);
             this.db.beginTransaction()
             .then(() => {
                 this.db.execute(
@@ -147,7 +177,7 @@ class LaptopService extends BaseService<LaptopModel> {
                         resolve(await this.services.laptopService.getById(
                             newLaptopId,
                             {
-                                loadCategory: true,
+                                loadCategories: true,
                                 loadFeatures: true,
                                 loadPhotos: true,
                             }

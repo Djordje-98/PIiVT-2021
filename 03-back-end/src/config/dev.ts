@@ -25,7 +25,7 @@ const Config: IConfig = {
 
     },
     fileUpload: {
-        maxSize: 5 * 1024 + 1024,
+        maxSize: 5 * 1024 * 1024,
         maxFiles: 5,
         timeout: 60000,
         temporaryDirectory: '../remp/',

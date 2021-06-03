@@ -18,8 +18,7 @@ class LaptopModel implements IModel {
     title: string;
     description: string;
     price: number;
-    categoryId: number;
-    category?: CategoryModel;
+    categories?: CategoryModel[] = [];
     photos: Photo[] = [];
     features: FeatureValue[] = [];
 }
