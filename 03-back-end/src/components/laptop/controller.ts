@@ -5,6 +5,8 @@ import Config from '../../config/dev';
 import { v4 } from "uuid";
 import { UploadedFile } from 'express-fileupload';
 import sizeOf from "image-size";
+import * as path from "path";
+import * as sharp from "sharp";
 
 class LaptopController extends BaseController {
     public async getById(req: Request, res: Response) {
@@ -18,13 +20,13 @@ class LaptopController extends BaseController {
         const item = await this.services.laptopService.getById(
             id,
             {
-                loadCategory: true,
+                loadCategories: true,
                 loadFeatures: true,
                 loadPhotos: true,
 
             }
             );
-
+         //   console.log(item);
         if (item === null) {
             res.sendStatus(404);
             return;
@@ -32,6 +34,7 @@ class LaptopController extends BaseController {
 
         res.send(item);
     }
+
 
     private isPhotoValid(file: UploadedFile): { isOk: boolean; message?: string } {
         try {
@@ -76,6 +79,32 @@ class LaptopController extends BaseController {
     }
 }
 
+    private async resizeUploadedPhoto(imagePath: string) {
+
+        const pathParts = path.parse(imagePath);
+        
+        const directory = pathParts.dir;
+        const filename = pathParts.name;
+        const extension = pathParts.ext;
+
+        for ( const resizeSpecification of Config.fileUpload.photos.resizes) {
+            const resizedImagePath = directory + "/" + 
+                                     filename + 
+                                     resizeSpecification.sufix + 
+                                     extension;
+
+            await sharp(imagePath)
+                .resize({
+                    width: resizeSpecification.width,
+                    height: resizeSpecification.height,
+                    fit: resizeSpecification.fit,
+                    background: { r: 255, g: 255, b: 255, alpha: 1.0, },
+                    withoutEnlargement: true,
+                })
+                .toFile(resizedImagePath);
+
+        }
+    }
 
     private async uploadFiles(req: Request, res: Response): Promise<IUploadedPhoto[]> {
         if (!req.files || Object.keys(req.files).length === 0) {
@@ -91,6 +120,7 @@ class LaptopController extends BaseController {
             const file = req.files[fileKey] as any;
 
             const result = this.isPhotoValid(file);
+            
             if (result.isOk === false) {
                 res.status(400).send(`Error with image ${fileKey}: "${result.message}".`);
                 return [];
@@ -107,6 +137,7 @@ class LaptopController extends BaseController {
                               randomString + "-" + originalName;
 
             await file.mv(imagePath);
+            await this.resizeUploadedPhoto(imagePath);
 
             uploadedPhotos.push({
                 imagePath: imagePath,
@@ -118,22 +149,23 @@ class LaptopController extends BaseController {
     }
 
     public async add(req: Request, res: Response) {
+        console.log(req);
         const uploadedPhotos = await this.uploadFiles(req, res);
 
         if (uploadedPhotos.length === 0) {
             return;
         }
-       
+       console.log(req.body?.data);
         try {
         const data = JSON.parse(req.body?.data);
-        
+        console.log(data);
         if (!IAddLaptopValidator(data)) {
             res.status(400).send(IAddLaptopValidator.errors);
             return;
         }
-
+        
         const result = await this.services.laptopService.add(data as IAddLaptop, uploadedPhotos);
-
+//console.log(result);
         res.send(result);
     } catch (e) {
         res.status(400).send(e?.message);
