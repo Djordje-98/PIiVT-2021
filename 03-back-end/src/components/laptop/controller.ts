@@ -34,6 +34,8 @@ class LaptopController extends BaseController {
     }
 
     private isPhotoValid(file: UploadedFile): { isOk: boolean; message?: string } {
+        try {
+
         const size = sizeOf(file.tempFilePath);
 
         const limits = Config.fileUpload.photos.limits;
@@ -66,7 +68,14 @@ class LaptopController extends BaseController {
         return {
             isOk: true,
         };
+    } catch (e) {
+        return {
+            isOk: false,
+            message: 'Bad file format.',
+        };
     }
+}
+
 
     private async uploadFiles(req: Request, res: Response): Promise<IUploadedPhoto[]> {
         if (!req.files || Object.keys(req.files).length === 0) {
@@ -115,7 +124,7 @@ class LaptopController extends BaseController {
             return;
         }
        
-
+        try {
         const data = JSON.parse(req.body?.data);
         
         if (!IAddLaptopValidator(data)) {
@@ -126,6 +135,9 @@ class LaptopController extends BaseController {
         const result = await this.services.laptopService.add(data as IAddLaptop, uploadedPhotos);
 
         res.send(result);
+    } catch (e) {
+        res.status(400).send(e?.message);
+    }
     }
 }
 
