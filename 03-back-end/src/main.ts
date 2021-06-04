@@ -11,6 +11,8 @@ import FeatureService from './components/feature/service';
 import LaptopService from './components/laptop/service';
 import LaptopRouter from './components/laptop/router';
 import * as fileUpload from "express-fileupload";
+import AdministratorService from './components/administrator/service';
+import AdministratorRouter from './components/administrator/router';
 
 async function main() {
   const application: express.Application = express();
@@ -52,6 +54,7 @@ resources.services = {
   categoryService: new CategoryService(resources),
   featureService: new FeatureService(resources),
   laptopService: new LaptopService(resources),
+  administratorService: new AdministratorService(resources),
 },
 
 application.use(
@@ -69,6 +72,7 @@ Router.setupRoutes(application, resources, [
       new CategoryRouter(),
       new FeatureRouter(),
       new LaptopRouter(),
+      new AdministratorRouter(),
 ]);
 
 application.use((req, res,) => {
