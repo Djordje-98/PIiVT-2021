@@ -5,6 +5,9 @@ import CategoryModel from '../category/model';
 import IErrorResponse from '../../common/IErrorResponse.interface';
 import { IAddLaptop, IUploadedPhoto } from './dto/IAddLaptop';
 import { IEditLaptop } from './dto/IEditLaptop';
+import * as fs from "fs";
+import path = require('path');
+import Config from '../../config/dev';
 
 export class LaptopModelAdapterOptions implements IModelAdapterOptionsInterface {
     loadCategories: boolean = false;
@@ -338,6 +341,123 @@ class LaptopService extends BaseService<LaptopModel> {
         });
     }
 
+    public async delete(laptopId: number): Promise<IErrorResponse|null> {
+        return new Promise<IErrorResponse>(async resolve => {
+            const currentLaptop = await this.getById(laptopId, {
+                loadFeatures: true,
+                loadPhotos: true,
+            });
+
+            if (currentLaptop === null) {
+                return resolve(null);
+            }
+
+            this.db.beginTransaction()
+            .then(async () => {
+                if (await this.deleteLaptopFeatureValues(laptopId)) return;
+                throw {errno: -1003, sqlMessage: "Could not delete laptop feature values.", };
+            })
+            .then(async () => {
+                const filesToDelete = await this.deleteLaptopPhotoRecords(laptopId);
+
+                if (filesToDelete.length !== 0) return filesToDelete;
+                throw {errno: -1004, sqlMessage: "Could not delete laptop photo records.", };
+            })
+            .then(async (filesToDelete) => {
+               if (await this.deleteLaptopRecord(laptopId)) return filesToDelete;
+               throw {errno: -1005, sqlMessage: "Could not delete the laptop records.", };
+            })
+            .then(async (filesToDelete) => {
+                await this.db.commit();
+                return filesToDelete;
+            })
+            .then((filesToDelete) => {
+                this.deleteLaptopPhotosAndResizedVersion(filesToDelete);
+            })
+            .then(() => {
+                resolve({
+                    errorCode: 0,
+                    errorMessage: "Laptop deleted",
+                });
+            })
+
+
+            .catch(async error => {
+                await this.db.rollback();
+
+                resolve({
+                    errorCode: error?.errno,
+                    errorMessage: error?.sqlMessage
+                });
+
+            });
+        });
+    }
+
+    private async deleteLaptopFeatureValues(laptopId: number): Promise<boolean> {
+        return new Promise<boolean>(async resolve => {
+            this.db.execute(
+                `DELETE FROM laptop_feature WHERE laptop_id = ?;`,
+                [ laptopId ]
+            )
+            .then(() => resolve(true))
+            .catch(() => resolve(false));
+        });
+    }
+    private async deleteLaptopPhotoRecords(laptopId: number): Promise<string[]> {
+        return new Promise<string[]>(async resolve => {
+            const [ rows ] = await this.db.execute(
+                `SELECT image_path FROM photo WHERE laptop_id = ?;`,
+                [ laptopId ]
+            );
+            if (!Array.isArray(rows) || rows.length === 0) return resolve([]);
+
+            const filesToDelete = rows.map(row => row?.image_path);
+
+            this.db.execute(
+                `DELETE FROM photo WHERE laptop_id = ?;`,
+                [ laptopId ]
+            )
+            .then(() => resolve(filesToDelete))
+            .catch(() => resolve([]))
+
+            resolve(filesToDelete);
+        });
+    }
+    private async deleteLaptopRecord(laptopId: number): Promise<boolean> {
+        return new Promise<boolean>(async resolve => {
+            this.db.execute(
+                `DELETE FROM laptop WHERE laptop_id = ?;`,
+                [ laptopId ]
+            )
+            .then(() => resolve(true))
+            .catch(() => resolve(false));
+        });
+    }
+    private deleteLaptopPhotosAndResizedVersion(filesToDelete: string[]) {
+        try {
+            for (const fileToDelete of filesToDelete) {
+            fs.unlinkSync(fileToDelete);
+            
+            const pathParts = path.parse(fileToDelete);
+        
+            const directory = pathParts.dir;
+            const filename = pathParts.name;
+            const extension = pathParts.ext;
+            
+            for (const resizeSpecification of Config.fileUpload.photos.resizes) {
+                const resizedImagePath = directory + "/" + 
+                                         filename + 
+                                         resizeSpecification.sufix + 
+                                         extension;
+                
+                fs.unlinkSync(resizedImagePath);
+            
+            }
+            }
+        } catch (e) { }
+    }
+     
 }
 
 
