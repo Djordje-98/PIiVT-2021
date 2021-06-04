@@ -4,6 +4,7 @@ import LaptopModel, { LaptopFeatureValue, LaptopPhoto } from './model';
 import CategoryModel from '../category/model';
 import IErrorResponse from '../../common/IErrorResponse.interface';
 import { IAddLaptop, IUploadedPhoto } from './dto/IAddLaptop';
+import { IEditLaptop } from './dto/IEditLaptop';
 
 export class LaptopModelAdapterOptions implements IModelAdapterOptionsInterface {
     loadCategories: boolean = false;
@@ -201,6 +202,138 @@ class LaptopService extends BaseService<LaptopModel> {
                     });
 
                 })
+            });
+        });
+    }
+
+    private editLaptop(laptopId: number, data: IEditLaptop) {
+        return this.db.execute(
+            `UPDATE
+                laptop
+            SET
+                title = ?,
+                description = ?,
+                price = ?
+            WHERE
+                laptop_id = ?;`,
+                [
+                    data.title,
+                    data.description,
+                    data.price,
+                    laptopId,
+                ]
+        )
+    }
+
+    private deleteLaptopFeature(laptopId: number, featureId: number) {
+        return this.db.execute(
+            `DELETE FROM 
+                    laptop_feature 
+            WHERE 
+                    laptop_id = ? AND
+                    feature_id = ?;`,
+            [
+                    laptopId,
+                    featureId,
+            ]
+        )
+    }
+    private insertOrUpdateFeatureValue(laptopId: number, fv: LaptopFeatureValue) {
+        return this.db.execute(
+            `INSERT
+                laptop_feature
+            SET
+                laptop_id = ?,
+                feature_id = ?,
+                value = ?
+            ON DUPLICATE KEY
+            UPDATE
+                value = ?;`,
+            [
+                laptopId,
+                fv.featureId,
+                fv.value,
+                fv.value,
+            ],
+        );
+    }
+
+    public async edit(laptopId: number, data: IEditLaptop): Promise<LaptopModel|null|IErrorResponse> {
+        return new Promise<LaptopModel|null|IErrorResponse>(async resolve => {
+            const currentLaptop = await this.getById(laptopId, {
+                loadFeatures: true,
+            });
+
+            if (currentLaptop === null) {
+                return resolve(null);
+            }
+
+            const rollbackAndResolve = async (error) => {
+                await this.db.rollback();
+                resolve(error);
+            }
+
+            this.db.beginTransaction()
+            .then(() => {
+                 this.editLaptop(laptopId, data)
+                .catch((error) => {
+                    rollbackAndResolve( {
+                        errno: error?.errno,
+                        sqlMessage: "Part laptop: " + error?.sqlMessage,
+                    });
+                });                
+                })
+                .then(async () => {
+                    const willhaveFeatures = data.features.map(fv => fv.featureId);
+                    const currentFeatures = (currentLaptop as LaptopModel).features.map(f => f.featureId);
+
+                    for (const currentFeature of currentFeatures) {
+                        if (!willhaveFeatures.includes(currentFeature)) {
+                            this.deleteLaptopFeature(laptopId, currentFeature)
+                            .catch((error) => {
+                                rollbackAndResolve( {
+                                    errno: error?.errno,
+                                    sqlMessage: `Part delete feature ID(${currentFeature}): ${error?.sqlMessage}`,
+                                });
+                            });
+                        }
+                    }
+                })
+                .then(async () => {
+                    for (const fv of data.features) {
+                        this.insertOrUpdateFeatureValue(laptopId, fv)
+                        .catch((error) => {
+                            rollbackAndResolve( {
+                                errno: error?.errno,
+                                sqlMessage: `Part add/edit feature ID(${fv.featureId}): ${error?.sqlMessage}`,
+                            });
+                        });
+                    }   
+                })
+                .then(async () => {
+                    this.db.commit()
+                    .catch((error) => {
+                        rollbackAndResolve( {
+                            errno: error?.errno,
+                            sqlMessage: `Part save changes: ${error?.sqlMessage}`,
+                        });
+                    });
+                })
+                .then(async () => {
+                    resolve(await this.getById(laptopId, {
+                        loadCategories: true,
+                        loadFeatures: true,
+                        loadPhotos: true,
+                    }));
+                })                
+            .catch(async error => {
+                await this.db.rollback();
+
+                resolve({
+                    errorCode: error?.errno,
+                    errorMessage: error?.sqlMessage
+                });
+
             });
         });
     }

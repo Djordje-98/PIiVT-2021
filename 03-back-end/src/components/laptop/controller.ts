@@ -7,6 +7,7 @@ import { UploadedFile } from 'express-fileupload';
 import sizeOf from "image-size";
 import * as path from "path";
 import * as sharp from "sharp";
+import { IEditLaptop, IEditLaptopValidator } from './dto/IEditLaptop';
 
 class LaptopController extends BaseController {
     public async getById(req: Request, res: Response) {
@@ -26,7 +27,7 @@ class LaptopController extends BaseController {
 
             }
             );
-         //   console.log(item);
+        
         if (item === null) {
             res.sendStatus(404);
             return;
@@ -149,13 +150,13 @@ class LaptopController extends BaseController {
     }
 
     public async add(req: Request, res: Response) {
-        console.log(req);
+       
         const uploadedPhotos = await this.uploadFiles(req, res);
 
         if (uploadedPhotos.length === 0) {
             return;
         }
-       console.log(req.body?.data);
+       
         try {
         const data = JSON.parse(req.body?.data);
         console.log(data);
@@ -165,11 +166,31 @@ class LaptopController extends BaseController {
         }
         
         const result = await this.services.laptopService.add(data as IAddLaptop, uploadedPhotos);
-//console.log(result);
+
         res.send(result);
     } catch (e) {
         res.status(400).send(e?.message);
     }
+    }
+    public async edit(req: Request, res: Response) {
+        const id: number = +(req.params?.id);
+
+        if (id <= 0) {
+            res.sendStatus(400);
+            return;
+        }
+
+        if (!IEditLaptopValidator(req.body)) {
+            return res.status(400).send(IEditLaptopValidator.errors);
+        }
+
+        const result = await this.services.laptopService.edit(id, req.body as IEditLaptop);
+
+        if (result === null) {
+            return res.sendStatus(404);
+        }
+
+        res.send(result);
     }
 }
 

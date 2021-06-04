@@ -10,5 +10,6 @@ export default class LaptopRouter implements IRouter {
 
         application.get('/laptop/:id', laptopController.getById.bind(laptopController));
         application.post('/laptop', laptopController.add.bind(laptopController));
+        application.put('/laptop/:id', laptopController.edit.bind(laptopController));
     }
 }
