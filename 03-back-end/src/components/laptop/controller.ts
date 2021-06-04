@@ -209,6 +209,22 @@ class LaptopController extends BaseController {
 
         res.send(await this.services.laptopService.delete(id));
     }
+
+    public async deleteLaptopPhoto(req: Request, res: Response) {
+        const laptopId: number = +(req.params?.aid);
+        const photoId: number = +(req.params?.pid);
+
+        if (laptopId <= 0 || photoId <= 0) {
+            return res.sendStatus(400);
+        }
+            const result = await this.services.laptopService.deleteLaptopPhoto(laptopId, photoId);
+
+            if (result === null) return res.sendStatus(404);
+
+            res.send(result);
+            
+        
+    }
 }
 
 export default LaptopController;

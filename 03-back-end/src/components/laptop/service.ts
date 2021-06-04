@@ -457,6 +457,46 @@ class LaptopService extends BaseService<LaptopModel> {
             }
         } catch (e) { }
     }
+
+    public async deleteLaptopPhoto(laptopId: number, photoId: number): Promise<IErrorResponse|null> {
+        return new Promise<IErrorResponse|null>(async resolve => {
+            const laptop = await this.getById(laptopId, {
+                loadPhotos: true,
+            });
+
+            if (laptop === null) {
+                return resolve(null);
+            } 
+
+            const filteredPhotos = (laptop as LaptopModel).photos.filter(p => p.photoId === photoId);
+
+            if (filteredPhotos.length === 0) {
+                return resolve(null);
+            }
+
+            const photo = filteredPhotos[0];
+
+            this.db.execute(
+                `DELETE FROM photo WHERE photo_id = ?;`,
+                [ photo.photoId ]
+            )
+            .then(() => {
+                this.deleteLaptopPhotosAndResizedVersion([
+                    photo.imagePath
+                ]);
+
+                resolve({
+                    errorCode: 0,
+                    errorMessage: "Photo deleted."
+            });
+            })
+            .catch(error => resolve({
+                errorCode: error?.errno,
+                errorMessage: error?.sqlMessage
+            }))
+
+        });
+    }
      
 }
 
