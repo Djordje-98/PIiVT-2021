@@ -8,6 +8,7 @@ import { IEditLaptop } from './dto/IEditLaptop';
 import * as fs from "fs";
 import path = require('path');
 import Config from '../../config/dev';
+import { UploadedFile } from 'express-fileupload';
 
 export class LaptopModelAdapterOptions implements IModelAdapterOptionsInterface {
     loadCategories: boolean = false;
@@ -496,6 +497,65 @@ class LaptopService extends BaseService<LaptopModel> {
             }))
 
         });
+    }
+
+    public async addLaptopPhotos(laptopId: number, uploadedPhotos: IUploadedPhoto[]): Promise<LaptopModel|IErrorResponse|null> {
+        return new Promise<LaptopModel|IErrorResponse|null>(async resolve => {
+            const laptop = await this.getById(laptopId, {
+                loadPhotos: true,
+            });
+
+            if (laptop === null) {
+                return resolve(null);
+            }
+            
+            this.db.beginTransaction()
+            .then(() => {
+                
+                const promises = [];
+
+                    for (const uploadedPhoto of uploadedPhotos) {
+                        promises.push(
+                            this.db.execute(
+                                `INSERT photo SET laptop_id = ?, image_path = ?;`,
+                                [ laptopId, uploadedPhoto.imagePath, ]
+                            ),
+                        );
+                    }
+
+                    Promise.all(promises)
+                    .then(async () => {
+                        await this.db.commit();
+
+                        resolve(await this.services.laptopService.getById(
+                            laptopId,
+                            {
+                                loadCategories: true,
+                                loadFeatures: true,
+                                loadPhotos: true,
+                            }
+                        ));
+                    })
+                    .catch(async error => {
+                        await this.db.rollback();
+    
+                        resolve({
+                            errorCode: error?.errno,
+                            errorMessage: error?.sqlMessage
+                        });
+                    });
+                })
+                .catch(async error => {
+                    await this.db.rollback();
+
+                    resolve({
+                        errorCode: error?.errno,
+                        errorMessage: error?.sqlMessage
+                    });
+
+                })
+            
+        })
     }
      
 }

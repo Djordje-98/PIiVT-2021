@@ -28,6 +28,10 @@ const ajv = new Ajv();
             minimum: 0.01,
             multipleOf: 0.01,
         },
+        categoryId: {
+            type: "integer",
+            minimum: 1,
+        },
         features: {
             type: "array",
             minItems: 0,

@@ -222,9 +222,31 @@ class LaptopController extends BaseController {
             if (result === null) return res.sendStatus(404);
 
             res.send(result);
-            
-        
+                
     }
+
+    public async addLaptopPhotos(req: Request, res: Response) {
+        const laptopId: number = +(req.params?.id);
+
+        if (laptopId <= 0) return res.sendStatus(400);
+
+        const item = await this.services.laptopService.getById(laptopId);
+        
+        if (item === null) {
+            res.sendStatus(404);
+            return;
+        }
+
+        const uploadedPhotos = await this.uploadFiles(req, res);
+
+        if (uploadedPhotos.length === 0) {
+            return;
+        }
+
+        res.send(await this.services.laptopService.addLaptopPhotos(laptopId, uploadedPhotos));
+
+    }
+
 }
 
 export default LaptopController;

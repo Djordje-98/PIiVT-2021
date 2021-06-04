@@ -13,5 +13,6 @@ export default class LaptopRouter implements IRouter {
         application.put('/laptop/:id', laptopController.edit.bind(laptopController));
         application.delete('/laptop/:id', laptopController.delete.bind(laptopController));
         application.delete('/laptop/:aid/photo/:pid', laptopController.deleteLaptopPhoto.bind(laptopController));
+        application.post('/laptop/:id/photo', laptopController.addLaptopPhotos.bind(laptopController));
     }
 }
