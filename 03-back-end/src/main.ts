@@ -13,6 +13,7 @@ import LaptopRouter from './components/laptop/router';
 import * as fileUpload from "express-fileupload";
 import AdministratorService from './components/administrator/service';
 import AdministratorRouter from './components/administrator/router';
+import AuthRouter from './components/auth/router';
 
 async function main() {
   const application: express.Application = express();
@@ -73,6 +74,7 @@ Router.setupRoutes(application, resources, [
       new FeatureRouter(),
       new LaptopRouter(),
       new AdministratorRouter(),
+      new AuthRouter(),
 ]);
 
 application.use((req, res,) => {

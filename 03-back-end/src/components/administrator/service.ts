@@ -33,6 +33,17 @@ class AdministratorService extends BaseService<AdministratorModel> {
     public async getByid(administratorId: number): Promise<AdministratorModel|null> {
         return await this.getByIdFromTable("administrator", administratorId, {}) as AdministratorModel|null;
     }
+
+    public async getByUsername(username: string): Promise<AdministratorModel|null> {
+        const administrators = await this.getAllByFieldNameFromTable("administrator", "username", username, {});
+
+        if (!Array.isArray(administrators) || administrators.length === 0) {
+            return null;
+        }
+
+        return administrators[0];
+    }
+
     public async add(data: IAddAdministrator): Promise<AdministratorModel|IErrorResponse> {
         return new Promise<AdministratorModel|IErrorResponse>(async resolve => {
 
