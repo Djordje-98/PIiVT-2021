@@ -33,15 +33,19 @@ class FeatureController extends BaseController{
     public async getAllInCategory(req: Request, res: Response, next: NextFunction){
         const categoryid: number = +(req.params.cid);
 
-        res.send(await this.services.featureService.getAllByCategoryId(categoryid));
+        res.send(await this.services.featureService.getAllByCategoryId(categoryid, {
+            loadCategory: true,
+        }));
     }
-    public async add(req: Request, res: Response) {
+    public async add(req: Request, res: Response, next: NextFunction) {
         const item = req.body;
         if (!IAddFeatureValidator(item)) {
             res.status(400).send(IAddFeatureValidator.errors);
             return;
         }
-        res.send(await this.services.featureService.add(item as IAddFeature));
+        res.send(await this.services.featureService.add(item as IAddFeature, {
+            loadCategory: true,
+        }));
     }
 
     public async edit(req: Request, res: Response) {
@@ -67,7 +71,9 @@ class FeatureController extends BaseController{
             return;
         }
 
-        res.send(await this.services.featureService.edit(featureId, req.body as IEditFeature));
+        res.send(await this.services.featureService.edit(featureId, req.body as IEditFeature, {
+            loadCategory: true,
+        }));
     }
 
 }

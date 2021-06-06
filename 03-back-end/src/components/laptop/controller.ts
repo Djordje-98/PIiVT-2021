@@ -159,7 +159,7 @@ class LaptopController extends BaseController {
        
         try {
         const data = JSON.parse(req.body?.data);
-        console.log(data);
+       
         if (!IAddLaptopValidator(data)) {
             res.status(400).send(IAddLaptopValidator.errors);
             return;

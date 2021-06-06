@@ -48,7 +48,10 @@ class FeatureService extends BaseService<FeatureModel> {
 
         }
 
-        public async add(data: IAddFeature): Promise<FeatureModel|IErrorResponse> {
+        public async add(
+            data: IAddFeature,
+            options: Partial<FeatureModelAdapterOptions> = { }
+            ): Promise<FeatureModel|IErrorResponse> {
             return new Promise<FeatureModel|IErrorResponse>(resolve => {
                 const sql = "INSERT feature SET name = ?, category_id = ?;";
                 this.db.execute(sql, [ data.name, data.categoryId ])

@@ -137,7 +137,6 @@ class LaptopService extends BaseService<LaptopModel> {
         uploadedPhotos: IUploadedPhoto[],
     ): Promise<LaptopModel|IErrorResponse> {
         return new Promise<LaptopModel|IErrorResponse>(resolve => {
-            console.log(data);
             this.db.beginTransaction()
             .then(() => {
                 this.db.execute(
