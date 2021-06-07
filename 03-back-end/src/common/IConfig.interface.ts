@@ -60,5 +60,6 @@ export default interface IConfig {
     },
     auth: {
        administrator: TokenOptions,
+       allowRequestEvenWithoutValidTokens: boolean,
     },
 };
