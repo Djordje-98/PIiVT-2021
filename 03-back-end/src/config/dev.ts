@@ -78,7 +78,7 @@ const Config: IConfig = {
             },
 
         },
-        allowRequestEvenWithoutValidTokens: true,
+        allowRequestEvenWithoutValidTokens: false,
     },
 };
 
