@@ -2,6 +2,11 @@ import api from "../api/api";
 import { saveAuthToken, saveRefreshToken } from '../api/api';
 import EventRegister from '../api/EventRegister';
 
+export interface IRegistrationResult {
+    success: boolean;
+    message?: string;
+}
+
 export default class AuthService {
     public static attemptAdministratorLogin(username: string, password: string) {
         api("post", "/auth/administrator/login", "administrator", {

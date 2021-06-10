@@ -1,46 +1,15 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import EventRegister from '../../api/EventRegister';
 
-class TopMenuState {
+class TopMenuProperties {
     currentMenuType: "administrator" | "visitor" = "visitor";
 }
 
-export default class TopMenu extends React.Component {
-    state: TopMenuState;
-
-    constructor(props: any) {
-        super(props);
-
-        this.state = {
-            currentMenuType: "visitor",
-        }
-    }
-
-    componentDidMount() {
-        EventRegister.on("AUTH_EVENT", this.authEvenntHandler.bind(this));
-    }
-
-    componentWillUnmount() {
-        EventRegister.off("AUTH_EVENT", this.authEvenntHandler.bind(this));
-    }
-
-    private authEvenntHandler(message: string) {
-        if (message === "force_login" || message === "administrator_logout") {
-            return this.setState({
-                currentMenuType: "visitor",
-            })
-        }
-        if (message === "administrator_login") {
-            return this.setState({
-                currentMenuType: "administrator",
-            })
-        }
-    }
+export default class TopMenu extends React.Component<TopMenuProperties> {
 
     render() {
-        if (this.state.currentMenuType === "visitor") {
+        if (this.props.currentMenuType === "visitor") {
             return (
         <Nav className="justify-content-center">
             <Nav.Item>
@@ -61,12 +30,12 @@ export default class TopMenu extends React.Component {
         </Nav>
             );
         }
-        if (this.state.currentMenuType === "administrator") {
+        if (this.props.currentMenuType === "administrator") {
             return (
         <Nav className="justify-content-center">
             
             <Nav.Item>
-                <Link className="nav-link" to="/dashboard/category">Categories</Link>
+                <Link className="nav-link" to="/category">Categories</Link>
             </Nav.Item>
 
             <Nav.Item>

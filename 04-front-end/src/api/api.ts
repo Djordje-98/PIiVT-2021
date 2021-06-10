@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import { AppConfiguration } from '../config/app.config';
-import EventRegister from './EventRegister';
 
 type ApiMethod = 'get' | 'post' | 'put' | 'delete';
 type ApiRole = 'administrator';
@@ -36,7 +35,6 @@ export default function api(
                 const newToken: string|null = await refreshToken('administrator');
 
                 if (newToken === null) {
-                    EventRegister.emit("AUTH_EVENT", "force_login");
 
                     return resolve({
                         status: 'login',
@@ -51,7 +49,6 @@ export default function api(
                     resolve(res);
                 })
                 .catch(() => {
-                    EventRegister.emit("AUTH_EVENT", "force_login");
 
                     resolve({
                         status: 'login',
@@ -62,16 +59,12 @@ export default function api(
             }
 
             if (err?.response?.status === 401){
-                EventRegister.emit("AUTH_EVENT", "force_login");
-
                 return resolve({
                     status: 'login',
                     data: null,
                 });
             }
             if (err?.response?.status === 403){
-                EventRegister.emit("AUTH_EVENT", "force_login");
-
                 return resolve({
                     status: 'login',
                     data: 'You are not authorized',

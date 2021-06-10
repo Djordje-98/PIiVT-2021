@@ -1,5 +1,6 @@
 import CategoryModel from '../../../03-back-end/src/components/category/model';
 import api from '../api/api';
+import EventRegister from '../api/EventRegister';
 
 
 export default class CategoryService {

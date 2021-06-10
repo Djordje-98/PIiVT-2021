@@ -103,4 +103,7 @@ export default class AuthController extends BaseController {
             return res.status(400).send("Invalid refresh token." + e?.message);
         }
     }
+    public sendOk(req: Request, res: Response) {
+        res.send("OK");
+    }
 }

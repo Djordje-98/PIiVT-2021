@@ -1,7 +1,9 @@
 import BasePage, { BasePageProperties } from '../BasePage/BasePage';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import CategoryModel from '../../../../03-back-end/dist/components/category/model';
 import CategoryService from '../../services/CategoryService';
+import EventRegister from '../../api/EventRegister';
+import LaptopModel from '../../../../03-back-end/src/components/laptop/model';
 class CategoryPageProperties extends BasePageProperties {
     match?: {
         params: {
