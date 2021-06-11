@@ -3,8 +3,10 @@ import FeatureModel from '../feature/model';
 import IErrorResponse from '../../common/IErrorResponse.interface';
 class CategoryModel implements IModel {
     categoryId: number;
-    name: string;
+    name?: string;
     features?: FeatureModel[]|IErrorResponse = [];
+    featureId?: number;
+
 }
 
 export default CategoryModel;

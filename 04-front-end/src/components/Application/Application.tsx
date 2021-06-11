@@ -10,6 +10,7 @@ import AdministratorLogin from '../AdministratorLogin/AdministratorLogin';
 import EventRegister from '../../api/EventRegister';
 import api from '../../api/api';
 import AdministratorLogout from '../AdministratorLogout/AdministratorLogout';
+import FeaturePage from '../FeaturePage/FeaturePage';
 
 
 class ApplicationState {
@@ -84,6 +85,14 @@ private checkRole(role: "administrator") {
                         <CategoryPage {...props} /> );
                     }
                   } />
+
+            <Route path="/feature/:fid?/laptop"
+            render={
+              (props: any) => {
+                return (
+                        <FeaturePage {...props} /> );
+              }
+            } />
   
             <Route path="/contact">
               <ContactPage 

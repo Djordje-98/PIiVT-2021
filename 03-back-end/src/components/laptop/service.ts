@@ -8,7 +8,6 @@ import { IEditLaptop } from './dto/IEditLaptop';
 import * as fs from "fs";
 import path = require('path');
 import Config from '../../config/dev';
-import { UploadedFile } from 'express-fileupload';
 
 export class LaptopModelAdapterOptions implements IModelAdapterOptionsInterface {
     loadCategories: boolean = false;
@@ -555,6 +554,57 @@ class LaptopService extends BaseService<LaptopModel> {
                 })
             
         })
+    }
+
+    public async getAllByFeatureId(featureId: number): Promise<LaptopModel[]> {
+        const sql = `
+        SELECT 
+            laptop.laptop_id,
+            laptop.title,
+            laptop.description,
+            laptop.price,
+            laptop_feature.feature_id,
+            laptop_feature.value,
+            photo.image_path,
+            photo.photo_id
+        FROM
+            laptop_feature
+        INNER JOIN laptop ON laptop.laptop_id = laptop_feature.laptop_id
+        INNER JOIN photo ON photo.laptop_id = laptop_feature.laptop_id
+        WHERE
+            laptop_feature.feature_id = ?
+        GROUP BY laptop_id;`;
+
+        const [ rows ] = await this.db.execute(sql, [ featureId ]);
+
+        if (!Array.isArray(rows) || rows.length === 0) {
+            return [];
+        }
+
+        const items: LaptopModel[] = [];
+
+        for (const row of rows as any) {
+            items.push({
+                laptopid: +(row?.laptop_id),
+                title: row?.title,
+                description: row?.description,
+                createdAt: row?.created_at,
+                price: row?.price,
+                photos: [
+                    {
+                        photoId: row?.photo_id,
+                        imagePath: row?.image_path,
+                    }
+                ],
+                features: [
+                    {
+                        featureId: row?.feature_id,
+                        value: row?.value,
+                    }
+                ],
+            });
+        }
+        return items;
     }
      
 }
