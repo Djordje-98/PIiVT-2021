@@ -1,14 +1,14 @@
 import CategoryModel from '../../../03-back-end/src/components/category/model';
-import api from '../api/api';
-import EventRegister from '../api/EventRegister';
+import api, { ApiRole } from '../api/api';
 
 
 export default class CategoryService {
-    public static getTopLevelCategories(): Promise<CategoryModel[]> {
+    public static getTopLevelCategories(role: ApiRole = "administrator"): Promise<CategoryModel[]> {
         return new Promise<CategoryModel[]>(resolve => {
             api(
                 "get",
                 "/category",
+                role
             )
             .then(res => {
                 if (res?.status !== "ok") {
@@ -20,11 +20,12 @@ export default class CategoryService {
         });
     }
 
-    public static getCategoryById(categoryId: number): Promise<CategoryModel|null> {
+    public static getCategoryById(categoryId: number, role: ApiRole = "administrator"): Promise<CategoryModel|null> {
         return new Promise<CategoryModel|null>(resolve => {
             api(
                 "get",
                 "/category/" + categoryId,
+                role,
             )
             .then(res => {
                 if (res?.status !== "ok") {

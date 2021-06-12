@@ -75,7 +75,7 @@ export default class LaptopPage extends BasePage<LaptopPageProperties> {
        return (
            <>
             <h1>
-                <Link to={ "/category/" + laptop.categories }>
+                <Link to={ "/feature/" + laptop.features[0].featureId + "/laptop" }>
                     &lt; Back
                 </Link> | { laptop.title }
             </h1>
@@ -97,14 +97,14 @@ export default class LaptopPage extends BasePage<LaptopPageProperties> {
                         <Card.Body>
                             <Card.Text as="div">
                                 <Row>
-                                    <Col xs={ 12 } md={ 8 } className="laptop-page-description">
-                                        { laptop.description }
-                                    </Col>
-                                    <strong className="h2">
+                                <strong className="h2">
                                     <Col xs={ 12 } md={ 4 }>
                                         &euro; { laptop.price.toFixed(2) }
                                     </Col>
                                     </strong>
+                                    <Col xs={ 12 } md={ 8 } className="laptop-page-description">
+                                        { laptop.description }
+                                    </Col>
                                 </Row>
                             </Card.Text>
                         </Card.Body>
