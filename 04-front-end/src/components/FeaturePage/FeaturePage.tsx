@@ -95,6 +95,13 @@ export default class FeaturePage extends BasePage<FeaturePageProperties> {
             this.setState({
                 title: result.name,
                 showBackButton: true,
+                features: [
+                    {
+                        featureId: result.featureId,
+                        name: result.name,
+                        categoryId: result.categoryId
+                    }
+                ]
             });
         })
     }
@@ -126,18 +133,18 @@ export default class FeaturePage extends BasePage<FeaturePageProperties> {
                         this.state.showBackButton
                         ? (
                             <>
-                                <Link to={ "/category/" }>
+                                <Link to={ "/category/" + this.state.features[0]?.categoryId }>
                                     &lt; Back
                                 </Link>
-                                |
+                                |   { this.state.title }
                             </>
                         )
                         : ""
                     }
-                    { this.state.title }
+        
                 </h1>
                 {
-                    this.state.features.length > 0
+                    this.state.features.length > 1
                     ? (
                         <>
                             <ul>
@@ -145,7 +152,7 @@ export default class FeaturePage extends BasePage<FeaturePageProperties> {
                                     this.state.features.map(
                                         feature => (
                                             <li key={ "feature-link-" + feature.featureId }>
-                                                <Link to={ "/feature" + feature.featureId + "/laptop" }>
+                                                <Link to={ "/feature/" + feature.featureId + "/laptop" }>
                                                     { feature.name }
                                                 </Link>
                                             </li>
