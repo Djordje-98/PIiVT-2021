@@ -35,7 +35,7 @@ export default class TopMenu extends React.Component<TopMenuProperties> {
         <Nav className="justify-content-center">
             
             <Nav.Item>
-                <Link className="nav-link" to="/category">Categories</Link>
+                <Link className="nav-link" to="/dashboard/category">Categories</Link>
             </Nav.Item>
 
             <Nav.Item>

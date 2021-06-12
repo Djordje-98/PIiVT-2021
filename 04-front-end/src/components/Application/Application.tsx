@@ -6,10 +6,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import HomePage from '../HomePage/HomePage';
 import CategoryPage from '../CategoryPage/CategoryPage';
 import ContactPage from '../ContactPage/ContactPage';
-import AdministratorLogin from '../AdministratorLogin/AdministratorLogin';
+import AdministratorLogin from '../Administrator/AdministratorLogin';
 import EventRegister from '../../api/EventRegister';
 import api from '../../api/api';
-import AdministratorLogout from '../AdministratorLogout/AdministratorLogout';
+import AdministratorLogout from '../Administrator/AdministratorLogout';
 import FeaturePage from '../FeaturePage/FeaturePage';
 import LaptopPage from '../Laptop/LaptopPage';
 
