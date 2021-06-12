@@ -2,8 +2,9 @@ remp/
 
 
 03-back-end/node_modules/
-03-back-end/dist/
 03-back-end/static/uploads/
+03-back-end/dist/
+03-back-end/keystore/
 
 
 04-front-end/node_modules/
