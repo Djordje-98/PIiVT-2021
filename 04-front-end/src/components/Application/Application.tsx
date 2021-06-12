@@ -11,6 +11,7 @@ import EventRegister from '../../api/EventRegister';
 import api from '../../api/api';
 import AdministratorLogout from '../AdministratorLogout/AdministratorLogout';
 import FeaturePage from '../FeaturePage/FeaturePage';
+import LaptopPage from '../Laptop/LaptopPage';
 
 
 class ApplicationState {
@@ -93,6 +94,7 @@ private checkRole(role: "administrator") {
                         <FeaturePage {...props} /> );
               }
             } />
+            <Route path="/laptop/:lid" component={ LaptopPage } />
   
             <Route path="/contact">
               <ContactPage 
