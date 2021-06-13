@@ -14,6 +14,7 @@ import FeaturePage from '../FeaturePage/FeaturePage';
 import LaptopPage from '../Laptop/LaptopPage';
 import CategoryDashboardList from '../Administrator/Dashboard/Category/CategoryDashboardList';
 import CategoryDashboardAdd from '../Administrator/Dashboard/Category/CategoryDashboardAdd';
+import CategoryDashboardEdit from '../Administrator/Dashboard/Category/CategoryDashboardEdit';
 
 
 class ApplicationState {
@@ -121,6 +122,7 @@ private authEvenntHandler(message: string) {
 
             <Route exact path="/dashboard/category" component={CategoryDashboardList} />
             <Route exact path="/dashboard/category/add" component={CategoryDashboardAdd} />
+            <Route path="/dashboard/category/edit/:cid" component={CategoryDashboardEdit} />
 
           </Switch>
         </div>
