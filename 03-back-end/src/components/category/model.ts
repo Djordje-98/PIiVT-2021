@@ -4,7 +4,7 @@ import IErrorResponse from '../../common/IErrorResponse.interface';
 class CategoryModel implements IModel {
     categoryId: number;
     name?: string;
-    features?: FeatureModel[] = [];
+    features?: FeatureModel[];
     featureId?: number;
 
 }

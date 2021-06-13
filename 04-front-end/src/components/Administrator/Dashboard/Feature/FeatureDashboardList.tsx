@@ -115,6 +115,30 @@ export default class FeatureDashboardList extends BasePage<FeatureDashboardListP
         };
     }
 
+    private getFeatureDeleteButtonClickHandler(featureId: number): () => void {
+        return () => {
+            FeatureService.deleteFeature(featureId)
+            .then(res => {
+                const message = res ? "Delete." : "Could not delete feature.";
+
+                this.setState((state: FeatureDashboardListState) => {
+                    state.featureMessages.set(featureId, message);
+                    return state;
+                });
+
+                setTimeout(() => {
+                    this.setState((state: FeatureDashboardListState) => {
+                        state.featureMessages.set(featureId, "");
+                        return state;
+                    });
+
+                    this.loadCategoryData();
+                }, 2000);
+            });
+            
+        }
+    }
+
     renderMain(): JSX.Element {
         if (this.state.category === null) {
             return (
@@ -163,7 +187,7 @@ export default class FeatureDashboardList extends BasePage<FeatureDashboardListP
                                             &nbsp;
 
                                             <Button variant="danger" size="sm"
-                                                    onClick={ () => {} }>
+                                                    onClick={ this.getFeatureDeleteButtonClickHandler(f.featureId) }>
                                                 Delete
                                             </Button>
                                         </td>

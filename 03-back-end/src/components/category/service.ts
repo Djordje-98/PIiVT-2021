@@ -4,6 +4,7 @@ import { IAddCategory } from "./dto/AddCategory";
 import BaseService from '../../common/BaseService';
 import { IEditCategory } from "./dto/EditCategory";
 import IModelAdapterOptions from '../../common/IModelAdapterOptions.interface';
+import FeatureModel from "../feature/model";
 
 class CategoryModelAdapterOptions implements IModelAdapterOptions {
     loadFeatures: boolean = false;
@@ -21,7 +22,7 @@ class CategoryService extends BaseService<CategoryModel> {
         item.name = row?.name;
 
 
-        item.features = await this.services.featureService.getAllByCategoryId(item.categoryId);
+        item.features = await this.services.featureService.getAllByCategoryId(item.categoryId) as FeatureModel[];
         
 
         return item;

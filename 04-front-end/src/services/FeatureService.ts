@@ -27,4 +27,14 @@ export default class FeatureService {
             })
         })
     }
+    public static deleteFeature(featureId: number): Promise<boolean> {
+        return new Promise<boolean>(resolve => {
+            api("delete", "/feature/" + featureId, "administrator")
+            .then(res => {
+                if (res.status !== "ok") return resolve(false);
+                if (res.data?.errorCode !== 0) return resolve(false);
+                resolve(true);
+            });
+        });
+    }
 }
