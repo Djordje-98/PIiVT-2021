@@ -14,10 +14,13 @@ export default class AuthService {
             password: password,
         }, false)
         .then(res => {
-            if (res.status === "ok") {
+            if (res.status === "ok") {                
                 const authToken = res.data?.authToken ?? "";
                 const refreshToken = res.data?.refreshToken ?? "";
 
+                console.log("auth", res.data?.authToken);
+                console.log("refresh", res.data?.refreshToken);
+                
                 saveAuthToken("administrator", authToken);
                 saveRefreshToken("administrator", refreshToken);
 
@@ -27,7 +30,7 @@ export default class AuthService {
             }
         })
         .catch(err => {
-            EventRegister.emit("AUTH_EVENT", ["administrator_login_failed", err]);
+            EventRegister.emit("AUTH_EVENT", "administrator_login_failed", err);
         });
     }
 }

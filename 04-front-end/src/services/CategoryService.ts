@@ -1,15 +1,10 @@
 import CategoryModel from '../../../03-back-end/src/components/category/model';
-import api, { ApiRole } from '../api/api';
-
+import api from '../api/api';
 
 export default class CategoryService {
-    public static getTopLevelCategories(role: ApiRole = "administrator"): Promise<CategoryModel[]> {
+    public static getTopLevelCategories(): Promise<CategoryModel[]> {
         return new Promise<CategoryModel[]>(resolve => {
-            api(
-                "get",
-                "/category",
-                role
-            )
+            api("get", "/category")
             .then(res => {
                 if (res?.status !== "ok") {
                     return resolve([]);
@@ -20,13 +15,9 @@ export default class CategoryService {
         });
     }
 
-    public static getCategoryById(categoryId: number, role: ApiRole = "administrator"): Promise<CategoryModel|null> {
+    public static getCategoryById(categoryId: number): Promise<CategoryModel|null> {
         return new Promise<CategoryModel|null>(resolve => {
-            api(
-                "get",
-                "/category/" + categoryId,
-                role,
-            )
+            api("get", "/category/" + categoryId)
             .then(res => {
                 if (res?.status !== "ok") {
                     return resolve(null);

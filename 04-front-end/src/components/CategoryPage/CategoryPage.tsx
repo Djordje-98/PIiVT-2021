@@ -133,7 +133,7 @@ export default class CategoryPage extends BasePage<CategoryPageProperties> {
                    )
                    : ""
                }
-               { this.state.title }
+               { " " + this.state.title }
             </h1>
 
             {

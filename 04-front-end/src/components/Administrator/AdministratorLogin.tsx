@@ -38,7 +38,8 @@ export default class AdministratorLogin extends BasePage<{}> {
         if (this.state.isLoggedIn) {
             return (
                 <Redirect to="/dashboard/category" />
-            )
+            );
+
         }
        return (
            <Row>
@@ -131,6 +132,5 @@ export default class AdministratorLogin extends BasePage<{}> {
                 isLoggedIn: true,
             });
         }
-        console.log(status, data);
     }
 }

@@ -25,14 +25,14 @@ export default function api(
             data: body ? JSON.stringify(body) : '',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer' + getAuthToken('administrator'),
+                'Authorization': 'Bearer' + getAuthToken("administrator"),
             },
         })
         .then(res => responseHandler(res, resolve))
         .catch(async err => {
 
             if (attemptToRefresh && ("" + err).includes("401")) {
-                const newToken: string|null = await refreshToken('administrator');
+                const newToken: string|null = await refreshToken("administrator");
 
                 if (newToken === null) {
 
@@ -42,7 +42,7 @@ export default function api(
                     });
                 }
 
-                saveAuthToken('administrator', newToken);
+                saveAuthToken("administrator", newToken);
 
                 api(method, path, role, body, false)
                 .then(res =>{
@@ -79,7 +79,7 @@ export default function api(
 }
 
 function responseHandler(res: AxiosResponse<any>, resolve: (data: ApiResponse) => void){
-    if (res?.status < 200 || res.status >= 300) {
+    if (res?.status < 200 || res?.status >= 300) {
         return resolve({
             status: 'error',
             data: '' + res,
@@ -111,7 +111,7 @@ export function saveIdentity(role: ApiRole, identity: string) {
 }
 
 export function getIdentity(role: ApiRole): string {
-    return localStorage.getItem(role + "-auth-token") ?? '';
+    return localStorage.getItem(role + "-identity") ?? '';
 }
 
 function refreshToken(role: ApiRole): Promise<string|null> {

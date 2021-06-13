@@ -5,7 +5,8 @@ class FeatureModel implements IModel {
     featureId: number;
     name: string;
     categoryId: number | null = null;
-    category: CategoryModel | null = null;
+    category: CategoryModel;
+
 }
 
 export default FeatureModel;

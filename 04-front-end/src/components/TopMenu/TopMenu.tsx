@@ -7,8 +7,9 @@ class TopMenuProperties {
 }
 
 export default class TopMenu extends React.Component<TopMenuProperties> {
-
+    
     render() {
+        console.log(this.props.currentMenuType);
         if (this.props.currentMenuType === "visitor") {
             return (
         <Nav className="justify-content-center">

@@ -12,6 +12,7 @@ import api from '../../api/api';
 import AdministratorLogout from '../Administrator/AdministratorLogout';
 import FeaturePage from '../FeaturePage/FeaturePage';
 import LaptopPage from '../Laptop/LaptopPage';
+import CategoryDashboardList from '../Administrator/Dashboard/Category/CategoryDashboardList';
 
 
 class ApplicationState {
@@ -31,7 +32,19 @@ export default class Application extends React.Component {
   componentDidMount() {
     EventRegister.on("AUTH_EVENT", this.authEvenntHandler.bind(this));
 
-    this.checkRole("administrator");
+    api("get", "/auth/administrator/ok", "administrator")
+      .then(res => {
+        console.log(res.data);
+        if (res?.data === "OK") {
+          this.setState({
+            authorizedRole: "administrator",
+          });
+          EventRegister.emit("AUTH_EVENT", "administrator_login");
+        }
+      })
+      .catch(() => {});
+
+    //this.checkRole("administrator");
 }
 
 componentWillUnmount() {
@@ -41,17 +54,17 @@ componentWillUnmount() {
 private authEvenntHandler(message: string) {
   if (message === "force_login" || message === "administrator_logout") {
       return this.setState({
-        authorizedRole: "visitor",
+        authorizedRole: "visitor"
       });
   }
   if (message === "administrator_login") {
       return this.setState({
-        authorizedRole: "administrator",
+        authorizedRole: "administrator"
       });
   }
 }
 
-private checkRole(role: "administrator") {
+/*private checkRole(role: "administrator") {
   api("get", "/auth/" + role + "/ok", role)
   .then(res => {
     if(res?.data === "OK") {
@@ -63,7 +76,7 @@ private checkRole(role: "administrator") {
     }
   })
   .catch(() =>{});
-}
+}*/
 
   render() {
     return (
@@ -104,6 +117,9 @@ private checkRole(role: "administrator") {
             </Route>
             <Route path="/administrator/login" component={AdministratorLogin} />
             <Route path="/administrator/logout" component={AdministratorLogout} />
+
+            <Route exact path="/dashboard/category" component={CategoryDashboardList} />
+
           </Switch>
         </div>
         <div>

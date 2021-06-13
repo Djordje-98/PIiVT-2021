@@ -16,7 +16,10 @@ class FeatureController extends BaseController{
             return;
         }
 
-        const result = await this.services.featureService.getById(featureId);
+        const result = await this.services.featureService.getById(featureId,{
+            loadCategory: true,
+        });
+        
 
         if (result === null){
             res.sendStatus(404);
