@@ -13,7 +13,7 @@ export interface ApiResponse{
 export default function api(
     method: ApiMethod,
     path: string,
-    role?: ApiRole,
+    role: ApiRole = "administrator",
     body: any | undefined = undefined,
     attemptToRefresh: boolean = true,
 ): Promise<ApiResponse> {
@@ -25,14 +25,14 @@ export default function api(
             data: body ? JSON.stringify(body) : '',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer' + getAuthToken("administrator"),
+                'Authorization': 'Bearer' + getAuthToken(role),
             },
         })
         .then(res => responseHandler(res, resolve))
         .catch(async err => {
 
             if (attemptToRefresh && ("" + err).includes("401")) {
-                const newToken: string|null = await refreshToken("administrator");
+                const newToken: string|null = await refreshToken(role);
 
                 if (newToken === null) {
 
@@ -42,7 +42,7 @@ export default function api(
                     });
                 }
 
-                saveAuthToken("administrator", newToken);
+                saveAuthToken(role, newToken);
 
                 api(method, path, role, body, false)
                 .then(res =>{

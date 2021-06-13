@@ -13,6 +13,7 @@ import AdministratorLogout from '../Administrator/AdministratorLogout';
 import FeaturePage from '../FeaturePage/FeaturePage';
 import LaptopPage from '../Laptop/LaptopPage';
 import CategoryDashboardList from '../Administrator/Dashboard/Category/CategoryDashboardList';
+import CategoryDashboardAdd from '../Administrator/Dashboard/Category/CategoryDashboardAdd';
 
 
 class ApplicationState {
@@ -119,6 +120,7 @@ private authEvenntHandler(message: string) {
             <Route path="/administrator/logout" component={AdministratorLogout} />
 
             <Route exact path="/dashboard/category" component={CategoryDashboardList} />
+            <Route exact path="/dashboard/category/add" component={CategoryDashboardAdd} />
 
           </Switch>
         </div>
