@@ -1,10 +1,10 @@
 import BasePage, { BasePageProperties } from '../../../BasePage/BasePage';
 import CategoryService from '../../../../services/CategoryService';
 import { Form, Button } from 'react-bootstrap';
-//import "./FeatureDashboardList.sass";
+import "./FeatureDashboardList.sass";
 import FeatureService from '../../../../services/FeatureService';
 import CategoryModel from '../../../../../../03-back-end/src/components/category/model';
-import { stringify } from 'querystring';
+import { confirmAlert } from "react-confirm-alert";
 
 class FeatureDashboardListProperties extends BasePageProperties {
     match?: {
@@ -122,26 +122,48 @@ export default class FeatureDashboardList extends BasePage<FeatureDashboardListP
 
     private getFeatureDeleteButtonClickHandler(featureId: number): () => void {
         return () => {
-            FeatureService.deleteFeature(featureId)
-            .then(res => {
-                const message = res ? "Delete." : "Could not delete feature.";
+            confirmAlert({
+                title: "Delete feature?",
+                message: "Are you sure you want to deleet this feature?",
+                buttons: [
+                    {
+                        label: "Yes",
+                        className: "btn btn-danger btn-lg",
+                        onClick: () => {
+                            this.performFeatureDelete(featureId);
+                        }
+                    },
+                    {
+                        label: "No",
+                        className: "btn btn-secondary btn-lg",
+                        onClick: () => { }
+                    }
+                ],
+                closeOnClickOutside: true,
+                closeOnEscape: true,
+            });
+        }
+    }
 
+    private performFeatureDelete(featureId: number) {
+        FeatureService.deleteFeature(featureId)
+        .then(res => {
+            const message = res ? "Deleted." : "Could not delete feature.";
+
+            this.setState((state: FeatureDashboardListState) => {
+                state.featureMessages.set(featureId, message);
+                return state;
+            });
+
+            setTimeout(() => {
                 this.setState((state: FeatureDashboardListState) => {
-                    state.featureMessages.set(featureId, message);
+                    state.featureMessages.set(featureId, "");
                     return state;
                 });
 
-                setTimeout(() => {
-                    this.setState((state: FeatureDashboardListState) => {
-                        state.featureMessages.set(featureId, "");
-                        return state;
-                    });
-
-                    this.loadCategoryData();
-                }, 2000);
-            });
-            
-        }
+                this.loadCategoryData();
+            }, 2000);
+        });
     }
 
     private onChangeInput(field: "newFeatureName"): (event: React.ChangeEvent<HTMLInputElement>) => void {
@@ -229,11 +251,11 @@ export default class FeatureDashboardList extends BasePage<FeatureDashboardListP
                     <tfoot>
                         <tr>
                             <td>
-                                <Form.Control type="text" size="sm" value={ this.state.newFeatureName } onChange={ this.onChangeInput("newFeatureName") } />
+                                <Form.Control type="text" size="sm"
+                                    value={ this.state.newFeatureName }
+                                    onChange={ this.onChangeInput("newFeatureName") } />
                             </td>
-                            <td>
-                            { this.state.newFeatureMessage }
-                            </td>
+                            <td>{ this.state.newFeatureMessage }</td>
                             <td>
                                 <Button variant="primary" size="sm"
                                         onClick={ () => this.addButtonClickhandler() }>
