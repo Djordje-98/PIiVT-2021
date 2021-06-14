@@ -1,0 +1,2700 @@
+{
+	"info": {
+		"_postman_id": "631a9c21-b30d-40b4-b4f5-86885f4a3fce",
+		"name": "Testiranje back-end dijela(API)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "GET all categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/category",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET all categories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/category",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "281"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"119-EURSVlThb2oSBKNAvQK5gxk+S/s\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 May 2021 14:13:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"categoryId\": 1,\n        \"name\": \"Category A\",\n        \"imagePath\": \"static/categories/1.png\",\n        \"parentCategoryId\": null,\n        \"parentCategory\": null,\n        \"subcategories\": []\n    },\n    {\n        \"categoryId\": 2,\n        \"name\": \"Category B\",\n        \"imagePath\": \"static/categories/2.png\",\n        \"parentCategoryId\": null,\n        \"parentCategory\": null,\n        \"subcategories\": []\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "GET a single category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/category/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET a single category -for an existing ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/category/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"category",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "139"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"8b-anRlJmCDdZazQhRGuW/p8Aybj1c\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 May 2021 14:39:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categoryId\": 1,\n    \"name\": \"Category A\",\n    \"imagePath\": \"static/categories/1.png\",\n    \"parentCategoryId\": null,\n    \"parentCategory\": null,\n    \"subcategories\": []\n}"
+						},
+						{
+							"name": "GET a single category - with an invalid ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/category/-2",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"category",
+										"-2"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "11"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b-EFiDB1U+dmqzx9Mo2UjcZ1SJPO8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 May 2021 14:40:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Bad Request"
+						}
+					]
+				},
+				{
+					"name": "POST a new category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Screen size\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/category",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "POST a new category - with a valid data structure",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Operativni sistemi\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/category",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "44"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2c-4KERxwtrQwyPhgvIFNPu4sJW5D8\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 26 May 2021 20:07:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categoryId\": 4,\n    \"name\": \"Operativni sistemi\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Put to edit an exisitng category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Operativni sistem\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/category/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PUT to edit an existing category -valid response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Razvoj softvera\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/category/4",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"category",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-Ag1fRLeXz3VcaS5ahoO6HB0UKqw\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 11:20:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categoryId\": 4,\n    \"name\": \"Razvoj softvera\"\n}"
+						},
+						{
+							"name": "PUT to edit an exisitng category - with a non existing categoryID",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Razvoj softvera\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/category/44",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"category",
+										"44"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "9"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 11:22:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Not Found"
+						}
+					]
+				},
+				{
+					"name": "DELETE a category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/category/6",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"category",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "DELETE a existing category",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/category/4",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"category",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "52"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"34-3Woi6Y4X+M3qVvsIQ1xzM++GrlM\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 16:00:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorCode\": 0,\n    \"errorMessage\": \"One record deleted.\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{API_ADMINISTRATOR_AUTH_TOKEN}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Feature",
+			"item": [
+				{
+					"name": "GET a single feature",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/feature/2",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"feature",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all features of a category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/category/1/feature",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"category",
+								"1",
+								"feature"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET all features of a category",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/category/1/feature",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"category",
+										"1",
+										"feature"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "130"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"82-sTX4ySzUhqyI+nHYH5Ql9xV0H+8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 31 May 2021 18:47:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"categoryId\": 1,\n        \"category\": null,\n        \"featureId\": 1,\n        \"name\": \"Procesor\"\n    },\n    {\n        \"categoryId\": 1,\n        \"category\": null,\n        \"featureId\": 2,\n        \"name\": \"Monitor\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "POST a new feature",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Linux\",\r\n    \"categoryId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/feature",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"feature"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT to edit an existing feature",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mac os\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/feature/2",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"feature",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PUT to edit an existing feature",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mac os\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/feature/2",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"feature",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "115"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"73-7BU5fGOJT3BnE+JGNAmor2jhEJU\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jun 2021 12:07:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categoryId\": 1,\n    \"category\": {\n        \"features\": [],\n        \"categoryId\": 1,\n        \"name\": \"Operativni sistem\"\n    },\n    \"featureId\": 2,\n    \"name\": \"Mac os\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Laptop",
+			"item": [
+				{
+					"name": "GET a single laptop",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/laptop/19",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"laptop",
+								"19"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET a single laptop - with an exisitng laptopId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/laptop/1",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"laptop",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "442"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1ba-B7AitPOmCbb4QxK5D3/Jy2rKVd8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 01 Jun 2021 16:32:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"photos\": [\n        {\n            \"photoId\": 1,\n            \"imagePath\": \"static/uploads/2021/05/1.jpg\"\n        },\n        {\n            \"photoId\": 2,\n            \"imagePath\": \"static/uploads/2021/05/1-all.jpg\"\n        }\n    ],\n    \"features\": [\n        {\n            \"featureId\": 1,\n            \"name\": \"Procesor\",\n            \"value\": \"500\"\n        },\n        {\n            \"featureId\": 2,\n            \"name\": \"Monitor\",\n            \"value\": \"2,5\\\"\"\n        },\n        {\n            \"featureId\": 3,\n            \"name\": \"Produkciona kuca\",\n            \"value\": \"DELL\"\n        }\n    ],\n    \"laptopid\": 1,\n    \"title\": \"Monitor\",\n    \"description\": \"Detaljan opis\",\n    \"createdAt\": \"2021-06-01T17:15:48.000Z\",\n    \"price\": 41,\n    \"categoryId\": null,\n    \"category\": null\n}"
+						},
+						{
+							"name": "GET a single laptop - with non existing laptopId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/laptop/5",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"laptop",
+										"5"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "9"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 01 Jun 2021 16:34:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Not Found"
+						}
+					]
+				},
+				{
+					"name": "POST a new laptop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\n\t\"title\": \"Laptop Dell4\",\n\t\"description\": \"Ovo je neki opis3\",\n\t\"price\": 45.87,\n\t\"features\": [{\n\t\t\t\"featureId\": 1,\n\t\t\t\"value\": \"ACME\"\n\t\t},\n\t\t{\n\t\t\t\"featureId\": 2,\n\t\t\t\"value\": \"2020\"\n\t\t}\n\t]\n}",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/C:/Users/Dell/Desktop/adsl-i-vdsl-internet.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/laptop",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"laptop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT to edit an exisiting laptop",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"title\": \"Monitor 1\",\r\n\t\"description\": \"Detaljan opis monitora 2\",\r\n\t\"price\": 21.45,\r\n\t\"features\": [{\r\n\t\t\t\"featureId\": 1,\r\n\t\t\t\"value\": \"456\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"featureId\": 2,\r\n\t\t\t\"value\": \"2,7\\\"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"featureId\": 3,\r\n\t\t\t\"value\": \"DELLLL\"\r\n\t\t}\r\n\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/laptop/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"laptop",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PUT to edit an exisiting laptop",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"title\": \"Monitor 1\",\r\n\t\"description\": \"Detaljan opis monitora 2\",\r\n\t\"price\": 21.45,\r\n\t\"features\": [{\r\n\t\t\t\"featureId\": 1,\r\n\t\t\t\"value\": \"456\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"featureId\": 2,\r\n\t\t\t\"value\": \"2,7\\\"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"featureId\": 3,\r\n\t\t\t\"value\": \"DELLLL\"\r\n\t\t}\r\n\t]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/laptop/1",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"laptop",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "442"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1ba-tr7LGcNLjr5irZQa4CYMVF76AOc\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 03 Jun 2021 21:08:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categories\": [],\n    \"photos\": [\n        {\n            \"photoId\": 1,\n            \"imagePath\": \"static/uploads/2021/05/1.jpg\"\n        },\n        {\n            \"photoId\": 2,\n            \"imagePath\": \"static/uploads/2021/05/1-all.jpg\"\n        }\n    ],\n    \"features\": [\n        {\n            \"featureId\": 2,\n            \"name\": \"Monitor\",\n            \"value\": \"2,7\\\"\"\n        },\n        {\n            \"featureId\": 1,\n            \"name\": \"Procesor\",\n            \"value\": \"456\"\n        },\n        {\n            \"featureId\": 3,\n            \"name\": \"Produkciona kuca\",\n            \"value\": \"DELLLL\"\n        }\n    ],\n    \"laptopid\": 1,\n    \"title\": \"Monitor 1\",\n    \"description\": \"Detaljan opis monitora 2\",\n    \"createdAt\": \"2021-06-01T17:15:48.000Z\",\n    \"price\": 21.45\n}"
+						},
+						{
+							"name": "PUT to edit an exisiting laptop - with a non-exisitng laptop ID",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"title\": \"Monitor 1\",\r\n\t\"description\": \"Detaljan opis monitora 2\",\r\n\t\"price\": 21.45,\r\n\t\"features\": [{\r\n\t\t\t\"featureId\": 1,\r\n\t\t\t\"value\": \"456\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"featureId\": 2,\r\n\t\t\t\"value\": \"2,7\\\"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"featureId\": 3,\r\n\t\t\t\"value\": \"DELLLL\"\r\n\t\t}\r\n\t]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/laptop/110",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"laptop",
+										"110"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "9"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 03 Jun 2021 21:10:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Not Found"
+						}
+					]
+				},
+				{
+					"name": "DELETE an exisitng laptop",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/laptop/18",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"laptop",
+								"18"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "DELETE an exisitng laptop",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/laptop/18",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"laptop",
+										"18"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "47"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2f-BrIX0k8afW+OOr7EtA3QJyZ74eg\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 10:14:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorCode\": 0,\n    \"errorMessage\": \"Laptop deleted\"\n}"
+						}
+					]
+				},
+				{
+					"name": "DELETE a single photo of a laptop",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/laptop/19/photo/14",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"laptop",
+								"19",
+								"photo",
+								"14"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "DELETE a single photo of a laptop",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/laptop/19/photo/14",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"laptop",
+										"19",
+										"photo",
+										"14"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "47"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2f-+DFY8+0YM+KyTge7bv5hfEa9mXg\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 10:46:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorCode\": 0,\n    \"errorMessage\": \"Photo deleted.\"\n}"
+						},
+						{
+							"name": "DELETE a single photo of a laptop - record not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/laptop/19/photo/14",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"laptop",
+										"19",
+										"photo",
+										"14"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "9"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 10:48:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Not Found"
+						}
+					]
+				},
+				{
+					"name": "POST a new photos to a laptop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "slika_a",
+									"type": "file",
+									"src": "/C:/Users/Dell/Desktop/slika2.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/laptop/199/photo",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"laptop",
+								"199",
+								"photo"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "POST a new photos to a laptop",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "slika_a",
+											"type": "file",
+											"src": "/C:/Users/Dell/Desktop/slika2.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{API_URL}}/laptop/19/photo",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"laptop",
+										"19",
+										"photo"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "476"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1dc-N0nrGNDoswiOvcYjQc5IFKLA/Xc\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 11:12:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categories\": [],\n    \"photos\": [\n        {\n            \"photoId\": 17,\n            \"imagePath\": \"static/uploads/2021/06/a8632b69-dc37-4164-8112-d17475b950dc-adsl-i-vdsl-internet.jpg\"\n        },\n        {\n            \"photoId\": 18,\n            \"imagePath\": \"static/uploads/2021/06/6edf0ba3-0050-4865-ae57-6b4c5390a8ab-slika2.jpg\"\n        }\n    ],\n    \"features\": [\n        {\n            \"featureId\": 1,\n            \"name\": \"Procesor\",\n            \"value\": \"ACME\"\n        },\n        {\n            \"featureId\": 2,\n            \"name\": \"Monitor\",\n            \"value\": \"2020\"\n        }\n    ],\n    \"laptopid\": 19,\n    \"title\": \"Laptop Dell2\",\n    \"description\": \"Ovo je neki opis3\",\n    \"createdAt\": \"2021-06-04T11:15:27.000Z\",\n    \"price\": 45.87\n}"
+						},
+						{
+							"name": "POST a new photos to a laptop - for a non-exisitng laptop ID",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "slika_a",
+											"type": "file",
+											"src": "/C:/Users/Dell/Desktop/slika2.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{API_URL}}/laptop/199/photo",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"laptop",
+										"199",
+										"photo"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "9"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 11:13:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Not Found"
+						}
+					]
+				},
+				{
+					"name": "GET all feature from laptop",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": [
+						{
+							"name": "GET all features from laptop",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/feature/1/laptop",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"feature",
+										"1",
+										"laptop"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "775"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"307-5D/lzsItnEQVyVnWwvzCTY5VWww\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jun 2021 18:48:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"laptopid\": 19,\n        \"title\": \"Laptop Dell2\",\n        \"description\": \"Ovo je neki opis3\",\n        \"price\": \"45.87\",\n        \"photos\": [\n            {\n                \"photoId\": 17,\n                \"imagePath\": \"static/uploads/2021/06/a8632b69-dc37-4164-8112-d17475b950dc-adsl-i-vdsl-internet.jpg\"\n            }\n        ],\n        \"features\": [\n            {\n                \"featureId\": 1,\n                \"value\": \"ACME\"\n            }\n        ]\n    },\n    {\n        \"laptopid\": 20,\n        \"title\": \"Laptop Dell3\",\n        \"description\": \"Ovo je neki opis3\",\n        \"price\": \"45.87\",\n        \"photos\": [\n            {\n                \"photoId\": 15,\n                \"imagePath\": \"static/uploads/2021/06/a717752b-9bd7-4eb4-b150-5b966d8674a2-adsl-i-vdsl-internet.jpg\"\n            }\n        ],\n        \"features\": [\n            {\n                \"featureId\": 1,\n                \"value\": \"ACME\"\n            }\n        ]\n    },\n    {\n        \"laptopid\": 21,\n        \"title\": \"Laptop Dell4\",\n        \"description\": \"Ovo je neki opis3\",\n        \"price\": \"45.87\",\n        \"photos\": [\n            {\n                \"photoId\": 16,\n                \"imagePath\": \"static/uploads/2021/06/23c7ba71-b504-4456-b646-9798550cbbe3-adsl-i-vdsl-internet.jpg\"\n            }\n        ],\n        \"features\": [\n            {\n                \"featureId\": 1,\n                \"value\": \"ACME\"\n            }\n        ]\n    }\n]"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{API_ADMINISTRATOR_AUTH_TOKEN}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Administrator",
+			"item": [
+				{
+					"name": "GET all administrators",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/administrator",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"administrator"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET all administrators",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/administrator",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"administrator"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "283"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11b-Y5/N4vg/te/duD9LzHlGb/cKttg\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 15:33:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"administratorId\": 1,\n        \"username\": \"Djordje\",\n        \"passwordHash\": \"$2b$11$5XSr0G/QGnqdBRcdG.8L2uuZs/8O20ix/vS9hQ30b9Hc7plTYFEmy\",\n        \"isActive\": true\n    },\n    {\n        \"administratorId\": 3,\n        \"username\": \"Djordje.grkovic\",\n        \"passwordHash\": \"$2b$11$49c2oTdEKRrkhdPnAoAWbuxmfa2xl3KjLw/uz631iCJbQco77nELC\",\n        \"isActive\": true\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "GET a single administrator",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/administrator/2",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"administrator",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET a single administrator",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/administrator/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"administrator",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "136"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"88-tJZN8VMGM3L5a+3LqtY9IqQ/13c\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 15:33:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"administratorId\": 1,\n    \"username\": \"Djordje\",\n    \"passwordHash\": \"$2b$11$5XSr0G/QGnqdBRcdG.8L2uuZs/8O20ix/vS9hQ30b9Hc7plTYFEmy\",\n    \"isActive\": true\n}"
+						},
+						{
+							"name": "GET a single administrator - when an administrator with the given ID does not exist",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/administrator/2",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"administrator",
+										"2"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "9"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 15:34:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Not Found"
+						}
+					]
+				},
+				{
+					"name": "POST a new administrator",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Djordje.grkovic\",\r\n    \"password\": \"test123456\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/administrator",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"administrator"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "POST a new administrator",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"Djordje\",\r\n    \"password\": \"test123\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/administrator",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"administrator"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "136"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"88-tJZN8VMGM3L5a+3LqtY9IqQ/13c\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 15:30:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"administratorId\": 1,\n    \"username\": \"Djordje\",\n    \"passwordHash\": \"$2b$11$5XSr0G/QGnqdBRcdG.8L2uuZs/8O20ix/vS9hQ30b9Hc7plTYFEmy\",\n    \"isActive\": true\n}"
+						},
+						{
+							"name": "POST a new administrator - when an administrator with the same username already exist",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"Djordje\",\r\n    \"password\": \"test123\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/administrator",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"administrator"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "97"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"61-nam5EP9jVzKeChX/WOUV5aklpZc\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 15:31:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorCode\": 1062,\n    \"errorMessage\": \"Duplicate entry 'Djordje' for key 'uq_administrator_username'\"\n}"
+						}
+					]
+				},
+				{
+					"name": "PUT new data for an exisitng administrator",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"lozinka33200011\",\r\n    \"isActive\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/administrator/3",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"administrator",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PUT new data for an exisitng administrator",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": \"lozinka33200011\",\r\n    \"isActive\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/administrator/3",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"administrator",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "145"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"91-kGAIJQKrxbU4vazlkfdxxRUe2CY\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 15:49:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"administratorId\": 3,\n    \"username\": \"Djordje.grkovic\",\n    \"passwordHash\": \"$2b$11$K3hRJlZpnpNaLxwL38aPJuF2rMfqTTeMieMZCMzJrTOC7arZ/fR.y\",\n    \"isActive\": false\n}"
+						},
+						{
+							"name": "PUT new data for an non-exisitng administrator",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": \"lozinka33200011\",\r\n    \"isActive\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/administrator/2",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"administrator",
+										"2"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "9"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 15:50:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Not Found"
+						}
+					]
+				},
+				{
+					"name": "DELETE an administrator",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/administrator/3",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"administrator",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "DELETE an administrator",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/administrator/3",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"administrator",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33-+/zHhg+84sQie8xvQmB03Ijwjc4\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 15:59:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorCode\": 0,\n    \"errorMessage\": \"Deleted 1 records.\"\n}"
+						},
+						{
+							"name": "DELETE an administrator - when an administrator with given ID does not exist",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/administrator/3",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"administrator",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33-fdUR+kEYPKq0iXOrFKT1mW2QMoM\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Jun 2021 15:59:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorCode\": 0,\n    \"errorMessage\": \"Deleted 0 records.\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Administrator",
+					"item": [
+						{
+							"name": "POST a new login request",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"Djordje\",\r\n    \"password\": \"test123\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/administrator/login",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"administrator",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "POST a new login request - when the administrator does not exist",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"Djordje1\",\r\n    \"password\": \"test123\"\r\n\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/administrator/login",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"administrator",
+												"login"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 05 Jun 2021 12:19:00 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								},
+								{
+									"name": "POST a new login request - with an invalid password",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"Djordje\",\r\n    \"password\": \"test1235454\"\r\n\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/administrator/login",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"administrator",
+												"login"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "html",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/html; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "31"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1f-6m/3ihwm3QpkaqHI5ehdTGQq6J0\""
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 05 Jun 2021 12:19:46 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid administrator password."
+								},
+								{
+									"name": "POST a new login request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"Djordje\",\r\n    \"password\": \"test123\"\r\n\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/administrator/login",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"administrator",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1072"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"430-mqoU2gt8awmhffCNkbO7k0XZCSk\""
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 05 Jun 2021 12:21:00 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"authToken\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWRlbnRpdHkiOiJEam9yZGplIiwicm9sZSI6ImFkbWluaXN0cmF0b3IiLCJpYXQiOjE2MjI4OTU2NjAsImV4cCI6MTYyMzUwMDQ2MCwiaXNzIjoibG9jYWxob3N0In0.UfSnAWLaSbH5hXbnNQfttSWjO2D8EjBDnB3VSmThxPPODu41o8lK_amioYtA-qMKh62P_LULIDQ2wNjZBG64vJaOcfRZHpltrJVt3lSGWgmHOYX6QRx6kbffV2A4cIrQ3FG4z7KGLIO41nV0khT41wLUhVhgJHFljXekyHnypid7wLT_je_dq8LOfdtz5NYbSj6CcC5vA0rF_pNzUcHIejP7kT5XCeu72XocYiEGOsvLb829NYE5OHnoR5zaJQPefLElcgZMfpHjv7_IYv11jDAkrJpK-k0O1O1pLtVjdfEmHt0gnteVhO1fRlmLjFQbwyFH4wMD8UEhoTxsJaBN9Q\",\n    \"refreshToken\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWRlbnRpdHkiOiJEam9yZGplIiwicm9sZSI6ImFkbWluaXN0cmF0b3IiLCJpYXQiOjE2MjI4OTU2NjAsImV4cCI6MTY1NDQzMTY2MCwiaXNzIjoibG9jYWxob3N0In0.DicBP3ULASQv2JnyN-kixgvNaZ-3PEaFW_BA0c9csRCkwOMeqajZXCWa5pFEq5xUShUGXwQv9jeQQ1H517ozEh1bmp1XWzmt0AYBLrsmO6btYyAShKYvsowIF8svHmk4IVv1_ndgO2T1Eq6N1ZIzRacmzJAV0QKiAjdcQbwMapdp1pqFv0Tqdxcf9xWbIUDwf5y-D9i_7vSpNfnLnEIl7oDlIakFdWCDm2OeUJM6Xtemq6bqzGAWGkQ7x_84g_SvVzWs70HTcmCaWH_nlYNkrrY6b2NvcdpVZKyP9PsCf_4jM8ej_Ylszk0z_lUwAhTT1eu3ZioAnTU6Z2X0NxUBnw\"\n}"
+								},
+								{
+									"name": "POST a new login request - when the account is inactive",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"Djordje\",\r\n    \"password\": \"test123\"\r\n\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/administrator/login",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"administrator",
+												"login"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "html",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/html; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "31"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1f-gGX/kiT3mamimbuyelW2JDm0OL8\""
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 05 Jun 2021 12:41:48 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Administrator account inactive."
+								}
+							]
+						},
+						{
+							"name": "Post a new token referesh request",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWRlbnRpdHkiOiJEam9yZGplIiwicm9sZSI6ImFkbWluaXN0cmF0b3IiLCJpYXQiOjE2MjMxNjA1MDAsImV4cCI6MTY1NDY5NjUwMCwiaXNzIjoibG9jYWxob3N0In0.Kud0DPE6r3AYAS_16a2Ex4cz31sQjuTACdKPoXwAF3Q1KLa1HEw8fruRbM-wy-p3cnVvTWzX58fMvunv8qDreRu0d5CUx8iDc2suxdJtv4M8Iba4GSez4_mGeNbJtqd9lRABrIrjCIcMZcigt0R1iq51WP4By5aubvbOOdgTaS6AytCA4OlVF7FMoH_wjOXnK5DNf6P_LTpm8r1tJCRRvjIyi55pCrXkaBzGBdMEMBduf2K3jRqMNf2og9vcAKBbNh2ejyhh8Lbgaa49MFHZOxL8TkuDhEmH1aR3nKAYbEYPdJdmMflziAglMdlLVFlzuF8JzbcxkEtDgMKpbEct6w\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/administrator/refresh",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"administrator",
+										"refresh"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Post a new token referesh request no refresh token",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"refreshToken\": \"\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/administrator/refresh",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"administrator",
+												"refresh"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "html",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "http://localhost:3000"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/html; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "42"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"2a-aEj57MuyqnGvNAI8fv/yoBgkx6s\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 08 Jun 2021 13:53:00 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid refresh token.jwt must be provided"
+								},
+								{
+									"name": "Post a new token referesh - with bad token",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"refreshToken\": \"123\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/administrator/refresh",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"administrator",
+												"refresh"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "html",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "http://localhost:3000"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/html; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "35"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"23-hjbMRsPmpACd9Q3D3/iOVvIeAYc\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 08 Jun 2021 13:53:37 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid refresh token.jwt malformed"
+								}
+							]
+						},
+						{
+							"name": "GET an OK message",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{API_ADMINISTRATOR_AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/auth/administrator/ok",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"administrator",
+										"ok"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "GET an OK message",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/auth/administrator/ok",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"administrator",
+												"ok"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "html",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "http://localhost:3000"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/html; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "2"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 09 Jun 2021 12:54:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "OK"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_ADMINISTRATOR_AUTH_TOKEN",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWRlbnRpdHkiOiJEam9yZGplOTgiLCJyb2xlIjoiYWRtaW5pc3RyYXRvciIsImlhdCI6MTYyMzU3OTI1MCwiZXhwIjoxNjI0MTg0MDUwLCJpc3MiOiJsb2NhbGhvc3QifQ.NQdpb6oqVeC1zl94xMEJjUM6obnj735yVrIu_WImvQJwwACP36hQgqKdX7ocO6TUOeBfc122UHTggO9MPb7doVG0bx9oH79dT32R1CyMH40aLbory37o1-GUatyB4COL8dvItyhWV6-1y6c_1zTfO_eVYuBi4c8FnsafrhHnw5ErsKRAnVPVtQNXOwf-rQAV9ckL2XvuSCayuTq8oMffo0HiPREn33SLSoClspedfrUMip2JCYZLaHPUovAtVR-8HMXf5ulCWI3NrQOk8I4gI2fPeyqwzcAgwH8qn62JRKs6J0pKKRqfU9CrkbGHmNKEBLE2mZd-FQW8fh5T8RiO6Q"
+		}
+	]
+}
