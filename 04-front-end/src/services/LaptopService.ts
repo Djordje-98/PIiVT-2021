@@ -45,6 +45,21 @@ export default class LaptopService {
         });
     }
 
+    public static getLaptops(): Promise<LaptopModel[]> {
+        return new Promise<LaptopModel[]>(resolve => {
+            api("get", "/laptop")
+            .then(res => {
+                if (res?.status !== "ok") {
+                    if (res.status === "login") {
+                        EventRegister.emit("AUTH_EVENT", "force_login");
+                    }
+                    return resolve([]);
+                }
+                resolve(res.data as LaptopModel[]);
+            });
+        });
+    }
+
     public static addLaptop(data: IAddLaptop): Promise<boolean> {
         return new Promise<boolean>(resolve => {
             const features: {
@@ -84,4 +99,5 @@ export default class LaptopService {
             });
         });
     }
+
 }

@@ -37,5 +37,6 @@ export default class LaptopRouter implements IRouter {
             laptopController.addLaptopPhotos.bind(laptopController));
 
         application.get("/feature/:id/laptop", laptopController.getAllByFeatureId.bind(laptopController));
+        application.get("/laptop", laptopController.getAllLaptops.bind(laptopController));
     }
 }

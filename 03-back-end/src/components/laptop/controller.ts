@@ -255,6 +255,10 @@ class LaptopController extends BaseController {
         res.send(await this.services.laptopService.getAllByFeatureId(id));
     }
 
+    public async getAllLaptops(req: Request, res: Response) {
+        res.send(await this.services.laptopService.getAllLaptops());
+    }
+
 }
 
 export default LaptopController;

@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import CategoryService from '../../../../services/CategoryService';
 import { Row, Col, Card, Form, Button } from 'react-bootstrap';
 import CategoryModel from '../../../../../../03-back-end/src/components/category/model';
+import { isRoleLoggedIn } from '../../../../api/api';
+import EventRegister from '../../../../api/EventRegister';
 
 interface CategoryDashboardAddState {
     categories: CategoryModel[];
@@ -31,12 +33,11 @@ export default class CategoryDashboardAdd extends BasePage<{}> {
     }
 
     componentDidMount() {
-       /* isRoleLoggedIn("administrator")
+        isRoleLoggedIn("administrator")
         .then(loggedIn => {
             if (!loggedIn) return EventRegister.emit("AUTH_EVENT", "force_login");
             this.loadCategories();
-        });*/
-        this.loadCategories();
+        });
     }
 
     loadCategories() {
@@ -97,7 +98,6 @@ export default class CategoryDashboardAdd extends BasePage<{}> {
     }
 
     private handleAddButtonClick() {
-        console.log(this.state.name);
         CategoryService.addNewCategory({name: this.state.name})
         .then(res => {
             if (res.success === false) {

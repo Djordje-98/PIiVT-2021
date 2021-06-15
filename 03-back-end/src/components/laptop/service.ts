@@ -557,7 +557,7 @@ class LaptopService extends BaseService<LaptopModel> {
     }
 
     public async getAllByFeatureId(featureId: number): Promise<LaptopModel[]> {
-        const sql = `
+        const sql: string = `
         SELECT 
             laptop.laptop_id,
             laptop.title,
@@ -604,6 +604,47 @@ class LaptopService extends BaseService<LaptopModel> {
                 ],
             });
         }
+        return items;
+    }
+
+    public async getAllLaptops(): Promise<LaptopModel[]|IErrorResponse> {
+        const sql: string = `
+        SELECT
+            laptop.*,
+            photo.image_path,
+            photo.photo_id
+        FROM
+            laptop
+        INNER JOIN photo ON photo.laptop_id = laptop.laptop_id
+        GROUP BY laptop_id
+        ORDER BY laptop.price DESC;`;
+
+        const [ rows ] = await this.db.execute(sql);
+
+        if (!Array.isArray(rows) || rows.length === 0) {
+            return [];
+        }
+
+        const items: LaptopModel[] = [];
+
+
+        for (const row of rows as any) {
+            items.push({
+                laptopid: +(row?.laptop_id),
+                title: row?.title,
+                description: row?.description,
+                createdAt: row?.created_at,
+                price: row?.price,
+                photos: [
+                    {
+                        photoId: row?.photo_id,
+                        imagePath: row?.image_path,
+                    }
+                ],
+                features: [],
+            });
+        }
+
         return items;
     }
      
