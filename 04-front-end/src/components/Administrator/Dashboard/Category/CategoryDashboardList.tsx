@@ -24,12 +24,14 @@ export default class CategoryDashboardList extends BasePage<{}> {
     }
 
     componentDidMount() {
-       /* isRoleLoggedIn("administrator")
+        
+        isRoleLoggedIn("administrator")
         .then(loggedIn => {
             if (!loggedIn) return EventRegister.emit("AUTH_EVENT", "force_login");
             this.loadCategories();
-        });*/
-        this.loadCategories();
+        })
+        //this.loadCategories();
+
     }
 
     loadCategories() {

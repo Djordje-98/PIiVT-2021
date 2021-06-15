@@ -2,6 +2,8 @@ import BasePage, { BasePageProperties } from '../../../BasePage/BasePage';
 import { Redirect } from 'react-router-dom';
 import CategoryService from '../../../../services/CategoryService';
 import { Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { isRoleLoggedIn } from '../../../../api/api';
+import EventRegister from '../../../../api/EventRegister';
 
 interface CategoryDashboardEditProperties extends BasePageProperties {
     match?: {
@@ -32,15 +34,16 @@ export default class CategoryDashboardEdit extends BasePage<CategoryDashboardEdi
             redirectBackToCategories: false,
         }
     }
-
+    
     componentDidMount() {
-       /* isRoleLoggedIn("administrator")
-        .then(loggedIn => {
-            if (!loggedIn) return EventRegister.emit("AUTH_EVENT", "force_login");
-            this.loadCategories();
-        });*/
-        this.loadCategoryData();
-    }
+         isRoleLoggedIn("administrator")
+         .then(loggedIn => {
+             if (!loggedIn) return EventRegister.emit("AUTH_EVENT", "force_login");
+             this.loadCategoryData();
+         });
+        // this.loadCategoryData();
+ 
+     }
 
     private getCategoryId(): number {
         return +(this.props.match?.params.cid ?? 0);
@@ -111,7 +114,7 @@ export default class CategoryDashboardEdit extends BasePage<CategoryDashboardEdi
     }
 
     private handleEditButtonClick() {
-       /* console.log(this.state.name);
+        console.log(this.state.name);
         CategoryService.editCategory(this.getCategoryId(), {
             name: this.state.name,
         })
@@ -125,8 +128,9 @@ export default class CategoryDashboardEdit extends BasePage<CategoryDashboardEdi
             this.setState({
                 redirectBackToCategories: true,
             });
-        });*/
+        });
     }
+
 
     private onChangeInput(field: "name"): (event: React.ChangeEvent<HTMLInputElement>) => void {
         return (event: React.ChangeEvent<HTMLInputElement>) => {
