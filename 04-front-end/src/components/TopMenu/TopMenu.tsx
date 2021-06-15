@@ -18,15 +18,15 @@ export default class TopMenu extends React.Component<TopMenuProperties> {
             </Nav.Item>
 
             <Nav.Item>
+                <Link className="nav-link" to="/category">Categories</Link>
+            </Nav.Item>
+
+            <Nav.Item>
                 <Link className="nav-link" to="contact">Contact</Link>
             </Nav.Item>
 
             <Nav.Item>
                 <Link className="nav-link" to="/administrator/login">Administrator login</Link>
-            </Nav.Item>
-
-            <Nav.Item>
-                <Link className="nav-link" to="/administrator/register">Register</Link>
             </Nav.Item>
         </Nav>
             );
@@ -40,11 +40,7 @@ export default class TopMenu extends React.Component<TopMenuProperties> {
             </Nav.Item>
 
             <Nav.Item>
-                <Link className="nav-link" to="/dashboard/laptop">Laptops</Link>
-            </Nav.Item>
-
-            <Nav.Item>
-                <Link className="nav-link" to="/dashboard/administrator">Administrators</Link>
+                <Link className="nav-link" to="/dashboard/laptop/new">Laptops</Link>
             </Nav.Item>
 
             <Nav.Item>
