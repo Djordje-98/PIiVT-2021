@@ -141,7 +141,7 @@ export default class LaptopDashboardAdd extends BasePage<{}> {
                                         <p className="mt-3 h4">Multimedia:</p>
 
                                         <Form.Group>
-                                            <Form.Label>Phone image:</Form.Label>
+                                            <Form.Label>Laptop image:</Form.Label>
                                             <Form.File
                                                 custom
                                                 data-browse="Select file"

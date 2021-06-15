@@ -442,14 +442,23 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"title\": \"Monitor 1\",\r\n\t\"description\": \"Detaljan opis monitora 2\",\r\n\t\"price\": 21.45,\r\n\t\"features\": [{\r\n\t\t\t\"featureId\": 1,\r\n\t\t\t\"value\": \"456\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"featureId\": 2,\r\n\t\t\t\"value\": \"2,7\\\"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"featureId\": 3,\r\n\t\t\t\"value\": \"DELLLL\"\r\n\t\t}\r\n\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{API_URL}}/category/6",
+							"raw": "{{API_URL}}/category/3",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"category",
-								"6"
+								"3"
 							]
 						}
 					},
@@ -752,6 +761,81 @@
 							"body": "{\n    \"categoryId\": 1,\n    \"category\": {\n        \"features\": [],\n        \"categoryId\": 1,\n        \"name\": \"Operativni sistem\"\n    },\n    \"featureId\": 2,\n    \"name\": \"Mac os\"\n}"
 						}
 					]
+				},
+				{
+					"name": "DELETE feature",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/feature/4",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"feature",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "DELETE feature with an exisiting id",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/feature/4",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"feature",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-TeDoYEXZHgNWVhEGw0XfXKDBnZA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 15 Jun 2021 18:10:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorCode\": 0,\n    \"errorMessage\": \"Deleted.\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -880,38 +964,6 @@
 							"body": "Not Found"
 						}
 					]
-				},
-				{
-					"name": "POST a new laptop",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "data",
-									"value": "{\n\t\"title\": \"Laptop Dell4\",\n\t\"description\": \"Ovo je neki opis3\",\n\t\"price\": 45.87,\n\t\"features\": [{\n\t\t\t\"featureId\": 1,\n\t\t\t\"value\": \"ACME\"\n\t\t},\n\t\t{\n\t\t\t\"featureId\": 2,\n\t\t\t\"value\": \"2020\"\n\t\t}\n\t]\n}",
-									"type": "text"
-								},
-								{
-									"key": "photo",
-									"type": "file",
-									"src": "/C:/Users/Dell/Desktop/adsl-i-vdsl-internet.jpg"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{API_URL}}/laptop",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"laptop"
-							]
-						}
-					},
-					"response": []
 				},
 				{
 					"name": "PUT to edit an exisiting laptop",
@@ -1485,6 +1537,38 @@
 							"body": "[\n    {\n        \"laptopid\": 19,\n        \"title\": \"Laptop Dell2\",\n        \"description\": \"Ovo je neki opis3\",\n        \"price\": \"45.87\",\n        \"photos\": [\n            {\n                \"photoId\": 17,\n                \"imagePath\": \"static/uploads/2021/06/a8632b69-dc37-4164-8112-d17475b950dc-adsl-i-vdsl-internet.jpg\"\n            }\n        ],\n        \"features\": [\n            {\n                \"featureId\": 1,\n                \"value\": \"ACME\"\n            }\n        ]\n    },\n    {\n        \"laptopid\": 20,\n        \"title\": \"Laptop Dell3\",\n        \"description\": \"Ovo je neki opis3\",\n        \"price\": \"45.87\",\n        \"photos\": [\n            {\n                \"photoId\": 15,\n                \"imagePath\": \"static/uploads/2021/06/a717752b-9bd7-4eb4-b150-5b966d8674a2-adsl-i-vdsl-internet.jpg\"\n            }\n        ],\n        \"features\": [\n            {\n                \"featureId\": 1,\n                \"value\": \"ACME\"\n            }\n        ]\n    },\n    {\n        \"laptopid\": 21,\n        \"title\": \"Laptop Dell4\",\n        \"description\": \"Ovo je neki opis3\",\n        \"price\": \"45.87\",\n        \"photos\": [\n            {\n                \"photoId\": 16,\n                \"imagePath\": \"static/uploads/2021/06/23c7ba71-b504-4456-b646-9798550cbbe3-adsl-i-vdsl-internet.jpg\"\n            }\n        ],\n        \"features\": [\n            {\n                \"featureId\": 1,\n                \"value\": \"ACME\"\n            }\n        ]\n    }\n]"
 						}
 					]
+				},
+				{
+					"name": "POST a new laptop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\n\t\"title\": \"Laptop Dell Inspiron\",\n\t\"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec odio lorem, hendrerit id nibh vel, sollicitudin molestie nunc. Vestibulum faucibus arcu sapien, id lobortis odio tincidunt quis. Nunc luctus cursus sapien, sit amet porttitor nibh cursus id. Donec venenatis erat eu est imperdiet mollis. Phasellus et congue est. Praesent et velit non risus blandit molestie et at libero. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam erat volutpat. Nunc ac lectus et erat maximus consectetur.\",\n\t\"price\": 999.99,\n\t\"features\": [{\n\t\t\t\"featureId\": 1,\n\t\t\t\"value\": \"10\"\n\t\t},\n\t\t{\n\t\t\t\"featureId\": 16,\n\t\t\t\"value\": \"UK\"\n\t\t},\n\t\t{\n\t\t\t\"featureId\": 11,\n\t\t\t\"value\": \"16GB\"\n\t\t}\n\t]\n}",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/C:/Users/Dell/Desktop/adsl-i-vdsl-internet.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/laptop",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"laptop"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
