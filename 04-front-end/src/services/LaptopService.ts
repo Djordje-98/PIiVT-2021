@@ -45,11 +45,7 @@ export default class LaptopService {
         });
     }
 
-<<<<<<< HEAD
     public static addLaptop(data: IAddLaptop): Promise<boolean> {
-=======
-    public static addPhone(data: IAddLaptop): Promise<boolean> {
->>>>>>> 989e26e9b6cd35388fa1aa2227b39171f9a3cb70
         return new Promise<boolean>(resolve => {
             const features: {
                 featureId: number;
